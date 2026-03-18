@@ -40,20 +40,53 @@ def analizar_planta():
         mt = data.get("media_type","image/jpeg")
         if not img:
             return jsonify({"error": "No se recibio imagen"}), 400
+
+        PROMPT = """Sos un botanico experto en horticultura y plantas de huerta organica.
+Analiza esta imagen CON MUCHO DETALLE siguiendo estos pasos antes de responder:
+
+PASO 1 - IDENTIFICACION PRECISA:
+- Observa la forma exacta de las hojas (borde, nervaduras, textura, brillo)
+- Observa el tallo (color, grosor, pelitos, nudos)
+- Observa si hay flores, frutos, raices visibles
+- Observa el patron de crecimiento (roseta, trepadora, erecta, etc)
+- Si hay texto en la imagen (cartel, maceta) usalo como pista
+- NO adivines: si no estas seguro al 90%, pone confianza "baja" y explicalo en razon_confianza
+
+PASO 2 - ESTADO SANITARIO:
+- Revisa el color de las hojas (verde uniforme, amarillas, marrones, manchas)
+- Busca patrones de amarillamiento (intervenal, marginal, uniforme, puntitos)
+- Detecta signos de plagas (agujeros, telas, manchas negras, excrementos)
+- Evalua la turgencia (marchitez, enrollamiento)
+
+PASO 3 - DIAGNOSTICO DE CARENCIAS:
+- Nitrogeno: amarillamiento uniforme empezando por hojas viejas
+- Hierro: amarillamiento intervenal en hojas jovenes (venas verdes)
+- Magnesio: amarillamiento intervenal en hojas viejas
+- Calcio: puntas y bordes marrones en hojas jovenes
+- Potasio: bordes marrones/quemados en hojas viejas
+- Fosforo: tono purpura/violaceo por el envez
+
+Responde UNICAMENTE con JSON valido sin markdown:
+{"planta":"nombre comun especifico (ej: Tomate cherry, Lechuga mantecosa)","confianza":"alta/media/baja","razon_confianza":"por que estas seguro o no","estado_general":"estado en 1-2 oraciones","carencias":[{"nutriente":"nombre","sintoma":"descripcion visual exacta","solucion":"accion organica concreta"}],"excesos":[{"nutriente":"nombre","sintoma":"descripcion visual exacta","solucion":"accion concreta"}],"plagas_detectadas":"ninguna o descripcion","recomendacion_principal":"accion mas urgente","abono_sugerido":"producto organico especifico"}"""
+
         r = client.messages.create(
             model="claude-opus-4-5",
-            max_tokens=1200,
+            max_tokens=1500,
             messages=[{"role":"user","content":[
                 {"type":"image","source":{"type":"base64","media_type":mt,"data":img}},
-                {"type":"text","text":'Analiza esta planta de huerta y responde SOLO con un objeto JSON valido, sin markdown, sin explicaciones extra. Formato exacto: {"planta":"nombre comun","confianza":"alta/media/baja","estado_general":"descripcion breve del estado","carencias":[{"nutriente":"nombre","sintoma":"descripcion","solucion":"accion concreta"}],"excesos":[{"nutriente":"nombre","sintoma":"descripcion","solucion":"accion concreta"}],"recomendacion_principal":"texto","abono_sugerido":"nombre del abono"}'}
+                {"type":"text","text":PROMPT}
             ]}]
         )
         texto = r.content[0].text.strip()
-        if texto.startswith("```"):
-            texto = texto.split("```")[1]
-            if texto.startswith("json"):
-                texto = texto[4:]
-            texto = texto.strip()
+        if "```" in texto:
+            partes = texto.split("```")
+            for p in partes:
+                p2 = p.strip()
+                if p2.startswith("json"):
+                    p2 = p2[4:].strip()
+                if p2.startswith("{"):
+                    texto = p2
+                    break
         resultado = json.loads(texto)
         return jsonify(resultado)
     except anthropic.AuthenticationError:
