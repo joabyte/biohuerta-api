@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-import anthropic, base64, json, os
+import anthropic
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -14,40 +15,24 @@ def index():
 def chat():
     try:
         data = request.json
+        system_prompt = data.get("system", "Sos un experto en huerta organica argentina.")
         messages = data.get("messages", [])
         if not messages:
             return jsonify({"error": "No messages"}), 400
         response = client.messages.create(
-            model="claude-opus-4-5", max_tokens=1000,
-            system=data.get("system", "Sos un experto en huerta organica argentina."),
+            model="claude-sonnet-4-20250514",
+            max_tokens=1000,
+            system=system_prompt,
             messages=messages
         )
         return jsonify({"reply": response.content[0].text})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route("/analizar-planta", methods=["POST"])
-def analizar_planta():
-    try:
-        data = request.json
-        image_b64 = data.get("image")
-        media_type = data.get("media_type", "image/jpeg")
-        if not image_b64:
-            return jsonify({"error": "No image"}), 400
-        response = client.messages.create(
-            model="claude-opus-4-5", max_tokens=1200,
-            messages=[{"role": "user", "content": [
-                {"type": "image", "source": {"type": "base64", "media_type": media_type, "data": image_b64}},
-                {"type": "text", "text": "Analiza esta planta y responde SOLO JSON valido sin markdown: {\"planta\": \"nombre\", \"confianza\": \"alta/media/baja\", \"estado_general\": \"desc\", \"carencias\": [{\"nutriente\": \"X\", \"sintoma\": \"X\", \"solucion\": \"X\"}], \"excesos\": [{\"nutriente\": \"X\", \"sintoma\": \"X\", \"solucion\": \"X\"}], \"recomendacion_principal\": \"X\", \"abono_sugerido\": \"X\"}"}
-            ]}]
-        )
-        return jsonify(json.loads(response.content[0].text.strip()))
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
 @app.route("/health")
 def health():
-    return jsonify({"status": "ok", "app": "BioHuerta v4.0"})
+    return jsonify({"status": "ok", "app": "BioHuerta v3.0"})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=False)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
