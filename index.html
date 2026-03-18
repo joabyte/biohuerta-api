@@ -966,6 +966,96 @@ irEstado(0);
 resetRes();
 }
 
+
+/* =============================================
+   ANALIZAR PLANTA CON IA
+   ============================================= */
+async function analizarPlanta(){
+  if(!imagenBase64)return;
+  var btn=document.getElementById("analizarBtn");
+  var rb=document.getElementById("resultBox");
+  btn.disabled=true;
+  btn.innerHTML="<span class='spinner'></span>Analizando...";
+  rb.style.display="block";
+  rb.innerHTML="<div style='color:var(--text-m);font-size:.82rem;text-align:center;padding:14px'><span class='spinner'></span>La IA esta analizando tu planta...</div>";
+  try{
+    var res=await fetch("/analizar-planta",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({image:imagenBase64,media_type:imageMediaType})
+    });
+    var d=await res.json();
+    if(d.error){rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>Error: "+d.error+"</div>";return;}
+    rb.innerHTML=renderRes(d);
+  }catch(e){
+    rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>Error de conexion: "+e.message+"</div>";
+  }
+  btn.disabled=false;
+  btn.innerHTML="&#128269; Analizar de nuevo";
+}
+
+function renderRes(d){
+  var h="";
+  h+="<div class='result-planta'>"+d.planta+"</div>";
+  if(d.confianza)h+="<div style='font-size:.65rem;color:var(--text-m);margin-bottom:6px'>Confianza: "+d.confianza+"</div>";
+  if(d.estado_general)h+="<div class='result-estado'>"+d.estado_general+"</div>";
+  if(d.carencias&&d.carencias.length){
+    h+="<div class='result-section'><div class='result-section-title'>&#128993; Carencias</div><div class='tag-list'>";
+    d.carencias.forEach(function(c){h+="<div class='tag-item carencia'><div class='tag-nutriente'>"+c.nutriente+"</div><div class='tag-sintoma'>"+c.sintoma+"</div><div class='tag-solucion'>&#128300; "+c.solucion+"</div></div>";});
+    h+="</div></div>";
+  }
+  if(d.excesos&&d.excesos.length){
+    h+="<div class='result-section'><div class='result-section-title'>&#128308; Excesos</div><div class='tag-list'>";
+    d.excesos.forEach(function(x){h+="<div class='tag-item exceso'><div class='tag-nutriente'>"+x.nutriente+"</div><div class='tag-sintoma'>"+x.sintoma+"</div><div class='tag-solucion'>&#128300; "+x.solucion+"</div></div>";});
+    h+="</div></div>";
+  }
+  if((!d.carencias||!d.carencias.length)&&(!d.excesos||!d.excesos.length)){
+    h+="<div class='result-ok'>&#10003; Planta sin carencias ni excesos visibles.</div>";
+  }
+  if(d.recomendacion_principal)h+="<div class='result-recomendacion'>&#127775; "+d.recomendacion_principal+"</div>";
+  if(d.abono_sugerido)h+="<div style='font-size:.78rem;color:var(--text-m);margin-top:8px'>Abono sugerido: <strong style='color:var(--green)'>"+d.abono_sugerido+"</strong></div>";
+  return h;
+}
+
+/* =============================================
+   NUTRIBOT CHAT
+   ============================================= */
+var ca=document.getElementById("chatArea");
+var ci=document.getElementById("chatInput");
+var sb=document.getElementById("sendBtn");
+var conv=[];
+var sp="Sos un experto en huerta organica argentina. Fecha: "+fechaLarga+". Fase: "+faseHoy.nombre+". Tipo de dia: "+tipoHoy.t+". Luz solar: "+luzHoy+"hs en Buenos Aires. Responde en espanol rioplatense, calido y conciso. Max 3 parrafos.";
+
+function aM(h,r){
+  var d=document.createElement("div");d.className="msg msg-"+r;
+  d.innerHTML="<div class='msg-label'>"+(r==="user"?"Vos":"NutriBot")+"</div><div class='msg-bubble'>"+h+"</div>";
+  ca.appendChild(d);ca.scrollTop=ca.scrollHeight;
+}
+function sT(){
+  var d=document.createElement("div");d.id="typing";d.className="msg msg-ai";
+  d.innerHTML="<div class='msg-label'>NutriBot</div><div class='msg-bubble'><div class='dots'><div class='dot'></div><div class='dot'></div><div class='dot'></div></div></div>";
+  ca.appendChild(d);ca.scrollTop=ca.scrollHeight;
+}
+function rT(){var t=document.getElementById("typing");if(t)t.remove();}
+
+async function sendMessage(){
+  var text=ci.value.trim();
+  if(!text||sb.disabled)return;
+  ci.value="";sb.disabled=true;
+  aM(text,"user");conv.push({role:"user",content:text});sT();
+  try{
+    var res=await fetch("/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({system:sp,messages:conv})});
+    var data=await res.json();
+    if(data.error)throw new Error(data.error);
+    conv.push({role:"assistant",content:data.reply});
+    rT();aM(data.reply.replace(/\n/g,"<br>"),"ai");
+  }catch(e){
+    rT();aM("Error de conexion. Verificar que el backend este activo.","ai");
+  }
+  sb.disabled=false;
+}
+function sendChip(el){ci.value=el.textContent.replace(/^[^\w\s]+\s/,"").trim();sendMessage();}
+ci.addEventListener("keydown",function(e){if(e.key==="Enter")sendMessage();});
 </script>
 </body>
 </html>
