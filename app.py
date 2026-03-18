@@ -46,7 +46,7 @@ def analizar_planta():
                 "role": "user",
                 "content": [
                     {"type": "image", "source": {"type": "base64", "media_type": media_type, "data": image_b64}},
-                    {"type": "text", "text": "Analiza esta imagen de una planta y responde SOLO con un JSON valido (sin markdown) con esta estructura: {\"planta\": \"nombre comun\", \"confianza\": \"alta/media/baja\", \"estado_general\": \"descripcion breve\", \"carencias\": [{\"nutriente\": \"nombre\", \"sintoma\": \"desc\", \"solucion\": \"como corregirlo organicamente\"}], \"excesos\": [{\"nutriente\": \"nombre\", \"sintoma\": \"desc\", \"solucion\": \"como corregirlo\"}], \"recomendacion_principal\": \"consejo urgente en 1 oracion\", \"abono_sugerido\": \"abono organico casero recomendado\"}. Si no hay carencias ni excesos, devuelve listas vacias."}
+                    {"type": "text", "text": "Analiza esta imagen de una planta y responde SOLO con un JSON valido (sin markdown) con esta estructura exacta: {\"planta\": \"nombre comun\", \"confianza\": \"alta/media/baja\", \"estado_general\": \"descripcion breve del estado visual\", \"carencias\": [{\"nutriente\": \"nombre\", \"sintoma\": \"descripcion\", \"solucion\": \"como corregirlo de forma organica\"}], \"excesos\": [{\"nutriente\": \"nombre\", \"sintoma\": \"descripcion\", \"solucion\": \"como corregirlo\"}], \"recomendacion_principal\": \"consejo mas urgente en 1 oracion\", \"abono_sugerido\": \"abono organico casero recomendado\"}. Si no hay carencias ni excesos devuelve listas vacias."}
                 ]
             }]
         )
@@ -54,7 +54,7 @@ def analizar_planta():
         resultado = json.loads(texto)
         return jsonify(resultado)
     except json.JSONDecodeError:
-        return jsonify({"error": "No se pudo parsear respuesta de la IA"}), 500
+        return jsonify({"error": "No se pudo parsear respuesta IA"}), 500
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
