@@ -152,7 +152,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .cal-detalle-title{font-size:.59rem;color:var(--text-m);text-transform:uppercase;letter-spacing:.09em;font-weight:600;margin-bottom:4px}
 .cal-tarea-list{list-style:none;display:flex;flex-direction:column;gap:2px}
 .cal-tarea-list li{font-size:.76rem;color:var(--text-s);padding-left:10px;position:relative;line-height:1.4}
-.cal-tarea-list li::before{content:'â–¸';position:absolute;left:0;color:var(--green);font-size:.63rem;top:1px}
+.cal-tarea-list li::before{content:'▸';position:absolute;left:0;color:var(--green);font-size:.63rem;top:1px}
 .cal-detalle-meta{display:flex;gap:8px;margin-top:5px;font-size:.63rem;color:var(--text-m);border-top:1px solid var(--border);padding-top:5px;flex-wrap:wrap}
 .cal-fase-sep{font-size:.58rem;color:var(--text-m);text-transform:uppercase;letter-spacing:.12em;font-weight:700;padding:5px 2px 2px;border-bottom:1px solid var(--border);margin-bottom:3px;opacity:.65}
 
@@ -230,7 +230,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .plaga-prev-title{font-size:.6rem;color:var(--green);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:3px}
 .plaga-prev-list{list-style:none;display:flex;flex-direction:column;gap:2px}
 .plaga-prev-list li{font-size:.73rem;color:var(--text-s);padding-left:9px;position:relative}
-.plaga-prev-list li::before{content:'âœ“';position:absolute;left:0;color:var(--green);font-size:.62rem}
+.plaga-prev-list li::before{content:'✓';position:absolute;left:0;color:var(--green);font-size:.62rem}
 
 /* SIEMBRA */
 .siem-mes-strip{display:flex;gap:5px;margin-bottom:11px;flex-wrap:wrap}
@@ -343,7 +343,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 <!-- ALMANAQUE -->
 <div class="card">
-  <div class="card-header"><div class="card-icon amber">&#127769;</div><div><div class="card-title">Almanaque Lunar</div><div class="card-sub">Calendario biodinamico â€” Buenos Aires</div></div></div>
+  <div class="card-header"><div class="card-icon amber">&#127769;</div><div><div class="card-title">Almanaque Lunar</div><div class="card-sub">Calendario biodinamico — Buenos Aires</div></div></div>
   <div class="luna-hoy" id="lunaHoy"></div>
   <div class="cal-nav"><button class="cal-nav-btn" onclick="calNavegar(-7)">&#8249;</button><span class="cal-nav-title" id="calRangoTitle"></span><button class="cal-nav-btn" onclick="calNavegar(7)">&#8250;</button></div>
   <div class="cal-grid" id="calGrid"></div>
@@ -618,7 +618,7 @@ var PLAGAS = [
     prevencion:["Plantar albahaca, lavanda o ajo cerca como repelentes naturales","Evitar exceso de nitrogeno (brotes muy tiernos son mas atacados)","Fomentar vaquitas de San Antonio (mariquitas) que se comen los pulgones","Revisar el envez de las hojas dos veces por semana","Eliminar hormigas cerca: ellas protegen y transportan los pulgones"]
   },
   {
-    id:"arana", nombre:"AraÃ±uela Roja", emoji:"&#128375;",
+    id:"arana", nombre:"Arañuela Roja", emoji:"&#128375;",
     temporada:["verano","otono"], nivel:"alto",
     sintoma:"Puntitos amarillos en hojas, aspecto bronceado. Tela de arana fina en envez. Las hojas se secan desde los bordes.",
     identificacion:"Araro de 0.5mm, rojizo o amarillo. Muy dificil de ver a simple vista. Se detecta mejor con lupa. Prospera con calor y baja humedad.",
@@ -659,7 +659,7 @@ var PLAGAS = [
     sintoma:"Hojas cortadas en semicirculos perfectos, brotes desaparecidos. Camino de hormigas entre el suelo y las plantas.",
     identificacion:"Cortadoras de hojas que llevan los trozos al hormiguero para cultivar hongos. Son indirectamente responsables de transportar pulgones.",
     recetas:[
-      {nombre:"Barrera de tierra de diatomeas", receta:"Esparcir tierra de diatomeas alrededor del tallo. Las particulas cortantes daÃ±an su exoesqueleto."},
+      {nombre:"Barrera de tierra de diatomeas", receta:"Esparcir tierra de diatomeas alrededor del tallo. Las particulas cortantes dañan su exoesqueleto."},
       {nombre:"Polvos de canela", receta:"Canela molida en polvo esparcida alrededor de la base de la planta. Rompe el rastro quimico de la colonia."},
       {nombre:"Cebo de levadura + azucar", receta:"1 cucharada levadura de cerveza + 1 azucar + 1 agua. En carton cerca del hormiguero. Llegan, comen y no pueden digerir."}
     ],
@@ -671,11 +671,11 @@ var PLAGAS = [
     sintoma:"Hojas con agujeros grandes e irregulares. Excrementos verdes o marrones sobre hojas. Plantas desfoliadas rapidamente.",
     identificacion:"Larvas de mariposas y polillas. Algunas se entierran de dia. Atacan principalmente brasicas (col, brocoli), tomates y pimientos.",
     recetas:[
-      {nombre:"Bacillus thuringiensis (Bt)", receta:"Producto organico certificado. Diluir segun envase y pulverizar sobre hojas. Las orugas lo ingieren y mueren en 2-3 dias. No daÃ±a insectos beneficos."},
+      {nombre:"Bacillus thuringiensis (Bt)", receta:"Producto organico certificado. Diluir segun envase y pulverizar sobre hojas. Las orugas lo ingieren y mueren en 2-3 dias. No daña insectos beneficos."},
       {nombre:"Infusion de ajo y ruda", receta:"10 dientes ajo + 1 ramita ruda en 1L agua. Hervir 10min, enfriar, colar. Aplicar sobre y bajo las hojas."},
       {nombre:"Recogida manual", receta:"De noche con linterna, retirar orugas a mano. Altamente efectivo si se hace 2-3 noches seguidas."}
     ],
-    prevencion:["Malla antiinsectos sobre los cultivos mas atacados","Revisar el envez de hojas para eliminar huevos antes de eclosionar","Plantar calÃ©ndulas cerca: atraen chinches depredadoras","Mantis religiosa: depredador natural excelente (no matar si aparece)","Podar hojas infestadas y retirar del huerto inmediatamente"]
+    prevencion:["Malla antiinsectos sobre los cultivos mas atacados","Revisar el envez de hojas para eliminar huevos antes de eclosionar","Plantar caléndulas cerca: atraen chinches depredadoras","Mantis religiosa: depredador natural excelente (no matar si aparece)","Podar hojas infestadas y retirar del huerto inmediatamente"]
   },
   {
     id:"oidio", nombre:"Oidio (Hongo)", emoji:"&#127812;",
@@ -749,7 +749,7 @@ function renderPlagas(){
   });
   filtradas.forEach(function(p){
     var card = document.createElement("div"); card.className = "plaga-card";
-    var tempBadges = p.temporada.map(function(t){return "<span class='plaga-temp-badge "+t+"'>"+{verano:"&#9728; Verano",otono:"&#127810; OtoÃ±o",invierno:"&#10052; Invierno",primavera:"&#127800; Primavera",todo:"Todo el aÃ±o"}[t]+"</span>";}).join("");
+    var tempBadges = p.temporada.map(function(t){return "<span class='plaga-temp-badge "+t+"'>"+{verano:"&#9728; Verano",otono:"&#127810; Otoño",invierno:"&#10052; Invierno",primavera:"&#127800; Primavera",todo:"Todo el año"}[t]+"</span>";}).join("");
     var nLabel = {alto:"Alto riesgo",medio:"Riesgo medio",bajo:"Bajo riesgo"}[p.nivel];
     card.innerHTML =
       "<div class='plaga-header' onclick='togglePlaga(this)'>" +
@@ -823,7 +823,7 @@ var CULTIVOS = [
   {e:"&#127811;",n:"Espinaca",tipo:"directa",
    meses:[2,3,4,7,8],cosecha:[4,5,6,9,10],luna:"Creciente",
    prof:"1cm",espaciado:"10x20cm",dias_germ:"5-8",dias_cosecha:"50-70",
-   tip:"Cultivo de estacion fria. En verano se espiga rapido. Ideal otoÃ±o e invierno en Buenos Aires."},
+   tip:"Cultivo de estacion fria. En verano se espiga rapido. Ideal otoño e invierno en Buenos Aires."},
   {e:"&#127875;",n:"Zapallo",tipo:"directa",
    meses:[9,10,11],cosecha:[1,2,3,4],luna:"Creciente",
    prof:"2cm",espaciado:"100x100cm",dias_germ:"5-10",dias_cosecha:"90-120",
@@ -839,11 +839,11 @@ var CULTIVOS = [
   {e:"&#129476;",n:"Ajo",tipo:"directa",
    meses:[4,5,6],cosecha:[10,11,12],luna:"Menguante",
    prof:"5cm",espaciado:"10x20cm",dias_germ:"10-15",dias_cosecha:"180-210",
-   tip:"Plantar los dientes separados en otoÃ±o. Cosechar cuando las hojas se secan en primavera. Repele muchas plagas."},
+   tip:"Plantar los dientes separados en otoño. Cosechar cuando las hojas se secan en primavera. Repele muchas plagas."},
   {e:"&#129477;",n:"Cebolla",tipo:"almacigo",
    meses:[2,3,4],cosecha:[8,9,10],luna:"Menguante",
    prof:"0.5cm",espaciado:"10x20cm",dias_germ:"10-12",dias_cosecha:"150-180",
-   tip:"Sembrar en almacigo en verano-otoÃ±o. Trasplantar cuando el plantino tenga el grosor de un lapiz."},
+   tip:"Sembrar en almacigo en verano-otoño. Trasplantar cuando el plantino tenga el grosor de un lapiz."},
 ];
 
 var MESES_NOMBRES = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
@@ -909,7 +909,7 @@ function toggleCultivo(header){
 /* ASOCIACION */
 var ASOCIACIONES = [
   {e:"&#127813;",n:"Tomate",
-   buenas:["Albahaca (repele mosca blanca y mejora el sabor)","Zanahoria (afloja el suelo cerca de raices)","Oregano y perejil","CalÃ©ndula (repele nematodos)"],
+   buenas:["Albahaca (repele mosca blanca y mejora el sabor)","Zanahoria (afloja el suelo cerca de raices)","Oregano y perejil","Caléndula (repele nematodos)"],
    malas:["Hinojo (inhibe el crecimiento)","Repollo (compiten por nutrientes)"],
    tip:"El tomate con albahaca es la asociacion clasica de la huerta organica argentina."},
   {e:"&#129388;",n:"Lechuga",
@@ -948,8 +948,22 @@ var ASOCIACIONES = [
 })();
 
 irEstado(0);
+
+function resetRes(){
+  var rb=document.getElementById("resultBox");
+  rb.style.display="none";rb.innerHTML="";
+  var btn=document.getElementById("analizarBtn");
+  if(btn){btn.disabled=false;btn.innerHTML="&#128269; Analizar";}
+}
+function volverAlInicio(){
+  imagenBase64=null;
+  irEstado(0);
+  resetRes();
+}
+
 function reintentar(){imagenBase64=null;
 irEstado(0);
+resetRes();
 }
 
 </script>
