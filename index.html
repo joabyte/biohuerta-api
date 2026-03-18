@@ -5,7 +5,25 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#06100f">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<style>html,body{background:#06100f!important;background-color:#06100f!important}</style>
+<style>html,body{background:#06100f!important;background-color:#06100f!important}
+.ref-section{margin-top:13px}
+.ref-title{font-size:.61rem;font-weight:600;color:var(--text-m);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.ref-title span{background:var(--amber-dim);border:1px solid rgba(255,198,84,.2);color:var(--amber);padding:2px 7px;border-radius:10px;font-size:.57rem}
+.ref-fotos{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ref-foto{aspect-ratio:1;border-radius:8px;overflow:hidden;background:rgba(255,255,255,.05);border:1px solid var(--border);position:relative;cursor:pointer}
+.ref-foto img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .3s}
+.ref-foto .ref-foto-load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.2rem;opacity:.4}
+.ref-foto img.loaded{opacity:1}
+.ref-foto img:not(.loaded){opacity:0}
+.ref-confirmar{margin-top:9px;display:flex;gap:6px}
+.ref-btn{flex:1;padding:9px;border-radius:8px;border:none;font-family:'Figtree',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;transition:opacity .2s}
+.ref-btn.si{background:var(--green-dim);border:1px solid rgba(109,220,138,.25);color:var(--green)}
+.ref-btn.no{background:var(--red-dim);border:1px solid rgba(255,112,112,.2);color:var(--red)}
+.ref-confirm-msg{text-align:center;padding:8px;font-size:.78rem;border-radius:8px;margin-top:6px}
+.ref-confirm-msg.ok{background:var(--green-dim);color:var(--green)}
+.ref-confirm-msg.fail{background:var(--red-dim);color:var(--red)}
+.ref-loading{font-size:.76rem;color:var(--text-m);text-align:center;padding:10px 0}
+</style>
 <title>BioHuerta Intelligent v4.0</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Figtree:wght@300;400;500;600&display=swap');
@@ -977,24 +995,52 @@ async function analizarPlanta(){
   var btn=document.getElementById("analizarBtn");
   var rb=document.getElementById("resultBox");
   btn.disabled=true;
-  btn.innerHTML="<span class='spinner'></span>Analizando...";
   rb.style.display="block";
-  rb.innerHTML="<div style='color:var(--text-m);font-size:.82rem;text-align:center;padding:14px'><span class='spinner'></span>La IA esta analizando tu planta...</div>";
+
+  // Animacion de progreso con mensajes rotativos
+  var msgs=["Identificando la especie...","Analizando el color de las hojas...","Revisando signos de carencias...","Evaluando el estado general...","Preparando el diagnostico..."];
+  var mIdx=0;
+  rb.innerHTML="<div id='analProgreso' style='text-align:center;padding:16px'><span class='spinner'></span><div id='analMsg' style='color:var(--text-m);font-size:.8rem;margin-top:8px'>"+msgs[0]+"</div><div style='margin-top:10px;background:rgba(109,220,138,.1);border-radius:4px;height:3px;overflow:hidden'><div id='analBar' style='height:100%;background:var(--green);width:5%;border-radius:4px;transition:width 1s'></div></div></div>";
+  btn.innerHTML="<span class='spinner'></span>Analizando...";
+
+  // Rotar mensajes y barra de progreso
+  var pct=5;
+  var intervalo=setInterval(function(){
+    mIdx=(mIdx+1)%msgs.length;
+    var el=document.getElementById("analMsg");
+    var bar=document.getElementById("analBar");
+    if(el)el.textContent=msgs[mIdx];
+    pct=Math.min(pct+18,90);
+    if(bar)bar.style.width=pct+"%";
+  },2800);
+
+  // AbortController para timeout de 50 segundos
+  var controller=new AbortController();
+  var timeoutId=setTimeout(function(){controller.abort();},50000);
+
   try{
     var res=await fetch("/analizar-planta",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({image:imagenBase64,media_type:imageMediaType})
+      body:JSON.stringify({image:imagenBase64,media_type:imageMediaType}),
+      signal:controller.signal
     });
+    clearTimeout(timeoutId);
+    clearInterval(intervalo);
+
+    // Completar barra
+    var bar=document.getElementById("analBar");
+    if(bar)bar.style.width="100%";
+
     var texto=await res.text();
     if(!texto||texto.trim()===""){
-      rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>&#9888; El backend no respondio. Verificar que ANTHROPIC_API_KEY este configurada en Render.</div>";
+      rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>&#9888; El backend no respondio. Verificar ANTHROPIC_API_KEY en Render.</div>";
       btn.disabled=false;btn.innerHTML="&#128269; Analizar de nuevo";return;
     }
     var d;
     try{d=JSON.parse(texto);}
     catch(pe){
-      rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>&#9888; Respuesta inesperada del servidor:<br><small style='opacity:.7'>"+texto.substring(0,200)+"</small></div>";
+      rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>&#9888; Respuesta inesperada:<br><small style='opacity:.7'>"+texto.substring(0,200)+"</small></div>";
       btn.disabled=false;btn.innerHTML="&#128269; Analizar de nuevo";return;
     }
     if(d.error){
@@ -1002,8 +1048,18 @@ async function analizarPlanta(){
       btn.disabled=false;btn.innerHTML="&#128269; Analizar de nuevo";return;
     }
     rb.innerHTML=renderRes(d);
+    // Lanzar busqueda de fotos de referencia en paralelo
+    if(d.planta){
+      mostrarFotosRef(d.planta);
+    }
   }catch(e){
-    rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>&#9888; Error de red: "+e.message+".<br><small style='opacity:.7'>Verificar conexion y que el servidor este activo.</small></div>";
+    clearTimeout(timeoutId);
+    clearInterval(intervalo);
+    if(e.name==="AbortError"){
+      rb.innerHTML="<div style='color:var(--amber);font-size:.82rem'>&#9200; Tiempo de espera agotado (50s).<br><small style='opacity:.7'>La imagen puede ser muy pesada. Intentá con galeria usando una foto mas liviana.</small></div>";
+    }else{
+      rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>&#9888; Error de red: "+e.message+"</div>";
+    }
   }
   btn.disabled=false;
   btn.innerHTML="&#128269; Analizar de nuevo";
@@ -1011,25 +1067,120 @@ async function analizarPlanta(){
 
 function renderRes(d){
   var h="";
+
+  // Encabezado con nombre y confianza
   h+="<div class='result-planta'>"+d.planta+"</div>";
-  if(d.confianza)h+="<div style='font-size:.65rem;color:var(--text-m);margin-bottom:6px'>Confianza: "+d.confianza+"</div>";
+  var confColor=d.confianza==="alta"?"var(--green)":d.confianza==="media"?"var(--amber)":"var(--red)";
+  if(d.confianza)h+="<div style='font-size:.65rem;color:"+confColor+";margin-bottom:2px;font-weight:600'>Confianza "+d.confianza.toUpperCase()+"</div>";
+  if(d.razon_confianza)h+="<div style='font-size:.67rem;color:var(--text-m);margin-bottom:8px;line-height:1.4;font-style:italic'>"+d.razon_confianza+"</div>";
   if(d.estado_general)h+="<div class='result-estado'>"+d.estado_general+"</div>";
+
+  // FOTOS DE REFERENCIA — aparecen primero para confirmar la planta
+  h+="<div class='ref-section' id='refSection'>";
+  h+="<div class='ref-title'>&#128247; Fotos de referencia <span>Confirmar especie</span></div>";
+  h+="<div class='ref-loading' id='refLoading'><span class='spinner'></span> Buscando fotos de "+d.planta+"...</div>";
+  h+="<div class='ref-fotos' id='refFotos' style='display:none'></div>";
+  h+="<div class='ref-confirmar' id='refConfirmar' style='display:none'>";
+  h+="<button class='ref-btn si' onclick='confirmarPlanta(true)'>&#10003; Si, es esta planta</button>";
+  h+="<button class='ref-btn no' onclick='confirmarPlanta(false)'>&#10005; No es esta planta</button>";
+  h+="</div>";
+  h+="<div id='refConfirmMsg' style='display:none'></div>";
+  h+="</div>";
+
+  // Carencias
   if(d.carencias&&d.carencias.length){
-    h+="<div class='result-section'><div class='result-section-title'>&#128993; Carencias</div><div class='tag-list'>";
+    h+="<div class='result-section'><div class='result-section-title'>&#128993; Carencias detectadas</div><div class='tag-list'>";
     d.carencias.forEach(function(c){h+="<div class='tag-item carencia'><div class='tag-nutriente'>"+c.nutriente+"</div><div class='tag-sintoma'>"+c.sintoma+"</div><div class='tag-solucion'>&#128300; "+c.solucion+"</div></div>";});
     h+="</div></div>";
   }
+  // Excesos
   if(d.excesos&&d.excesos.length){
-    h+="<div class='result-section'><div class='result-section-title'>&#128308; Excesos</div><div class='tag-list'>";
+    h+="<div class='result-section'><div class='result-section-title'>&#128308; Excesos detectados</div><div class='tag-list'>";
     d.excesos.forEach(function(x){h+="<div class='tag-item exceso'><div class='tag-nutriente'>"+x.nutriente+"</div><div class='tag-sintoma'>"+x.sintoma+"</div><div class='tag-solucion'>&#128300; "+x.solucion+"</div></div>";});
     h+="</div></div>";
+  }
+  if(d.plagas_detectadas&&d.plagas_detectadas!=="ninguna"){
+    h+="<div class='result-section'><div class='result-section-title'>&#128027; Plagas / enfermedades</div>";
+    h+="<div style='font-size:.77rem;color:var(--red);background:var(--red-dim);border:1px solid rgba(255,112,112,.2);border-radius:8px;padding:9px 11px;line-height:1.5'>"+d.plagas_detectadas+"</div></div>";
   }
   if((!d.carencias||!d.carencias.length)&&(!d.excesos||!d.excesos.length)){
     h+="<div class='result-ok'>&#10003; Planta sin carencias ni excesos visibles.</div>";
   }
   if(d.recomendacion_principal)h+="<div class='result-recomendacion'>&#127775; "+d.recomendacion_principal+"</div>";
-  if(d.abono_sugerido)h+="<div style='font-size:.78rem;color:var(--text-m);margin-top:8px'>Abono sugerido: <strong style='color:var(--green)'>"+d.abono_sugerido+"</strong></div>";
+  if(d.abono_sugerido)h+="<div style='font-size:.78rem;color:var(--text-m);margin-top:8px'>&#127807; Abono sugerido: <strong style='color:var(--green)'>"+d.abono_sugerido+"</strong></div>";
   return h;
+}
+
+// Buscar fotos de referencia en Wikimedia Commons
+async function buscarFotosRef(nombrePlanta){
+  try{
+    // Buscar en Wikipedia ES primero para imagen principal
+    var queryWiki="https://es.wikipedia.org/w/api.php?action=query&titles="+encodeURIComponent(nombrePlanta)+"&prop=pageimages&format=json&pithumbsize=400&origin=*";
+    var resWiki=await fetch(queryWiki);
+    var dataWiki=await resWiki.json();
+    var pages=dataWiki.query.pages;
+    var wikiImg=null;
+    Object.values(pages).forEach(function(p){if(p.thumbnail)wikiImg=p.thumbnail.source;});
+
+    // Buscar en Wikimedia Commons por termino
+    var queryCommons="https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&gsrsearch="+encodeURIComponent(nombrePlanta+" plant"+"&gsrlimit=8&prop=imageinfo&iiprop=url|thumburl&iiurlwidth=300&format=json&origin=*");
+    var resCommons=await fetch(queryCommons);
+    var dataCommons=await resCommons.json();
+
+    var fotos=[];
+    if(wikiImg)fotos.push(wikiImg);
+
+    if(dataCommons.query&&dataCommons.query.pages){
+      Object.values(dataCommons.query.pages).forEach(function(p){
+        if(p.imageinfo&&p.imageinfo[0]){
+          var url=p.imageinfo[0].thumburl||p.imageinfo[0].url;
+          if(url&&(url.endsWith(".jpg")||url.endsWith(".JPG")||url.endsWith(".jpeg")||url.endsWith(".png"))&&fotos.indexOf(url)<0){
+            fotos.push(url);
+          }
+        }
+      });
+    }
+    return fotos.slice(0,3);
+  }catch(e){
+    return [];
+  }
+}
+
+async function mostrarFotosRef(nombrePlanta){
+  var fotos=await buscarFotosRef(nombrePlanta);
+  var loadEl=document.getElementById("refLoading");
+  var fotosEl=document.getElementById("refFotos");
+  var confEl=document.getElementById("refConfirmar");
+  if(!loadEl||!fotosEl)return;
+  loadEl.style.display="none";
+  if(!fotos||fotos.length===0){
+    var refSec=document.getElementById("refSection");
+    if(refSec)refSec.innerHTML="<div style='font-size:.72rem;color:var(--text-m);padding:6px 0'>No se encontraron fotos de referencia para esta planta.</div>";
+    return;
+  }
+  var fH="";
+  fotos.forEach(function(url,i){
+    fH+="<div class='ref-foto'><div class='ref-foto-load'>&#127807;</div><img src='"+url+"' alt='"+nombrePlanta+"' loading='lazy' onload="this.classList.add('loaded')" onerror="this.parentElement.innerHTML='<div class=\'ref-foto-load\' style=\'opacity:.3\'>&#10005;</div>'"></div>";
+  });
+  fotosEl.innerHTML=fH;
+  fotosEl.style.display="grid";
+  confEl.style.display="flex";
+}
+
+function confirmarPlanta(esCorrecta){
+  var confEl=document.getElementById("refConfirmar");
+  var msgEl=document.getElementById("refConfirmMsg");
+  if(confEl)confEl.style.display="none";
+  if(msgEl){
+    msgEl.style.display="block";
+    if(esCorrecta){
+      msgEl.className="ref-confirm-msg ok";
+      msgEl.innerHTML="&#10003; Perfecto! El diagnostico es para esta planta.";
+    }else{
+      msgEl.className="ref-confirm-msg fail";
+      msgEl.innerHTML="&#10005; Intenta con una foto mas clara, de frente a las hojas, con buena luz. La IA necesita ver bien la planta para identificarla.";
+    }
+  }
 }
 
 /* =============================================
