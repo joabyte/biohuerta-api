@@ -49,7 +49,6 @@ def analizar_planta():
             ]}]
         )
         texto = r.content[0].text.strip()
-        # Limpiar posibles markdown fences
         if texto.startswith("```"):
             texto = texto.split("```")[1]
             if texto.startswith("json"):
