@@ -984,11 +984,24 @@ async function analizarPlanta(){
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({image:imagenBase64,media_type:imageMediaType})
     });
-    var d=await res.json();
-    if(d.error){rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>Error: "+d.error+"</div>";return;}
+    var texto=await res.text();
+    if(!texto||texto.trim()===""){
+      rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>&#9888; El backend no respondio. Verificar que ANTHROPIC_API_KEY este configurada en Render.</div>";
+      btn.disabled=false;btn.innerHTML="&#128269; Analizar de nuevo";return;
+    }
+    var d;
+    try{d=JSON.parse(texto);}
+    catch(pe){
+      rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>&#9888; Respuesta inesperada del servidor:<br><small style='opacity:.7'>"+texto.substring(0,200)+"</small></div>";
+      btn.disabled=false;btn.innerHTML="&#128269; Analizar de nuevo";return;
+    }
+    if(d.error){
+      rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>&#9888; Error: "+d.error+"</div>";
+      btn.disabled=false;btn.innerHTML="&#128269; Analizar de nuevo";return;
+    }
     rb.innerHTML=renderRes(d);
   }catch(e){
-    rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>Error de conexion: "+e.message+"</div>";
+    rb.innerHTML="<div style='color:var(--red);font-size:.82rem'>&#9888; Error de red: "+e.message+".<br><small style='opacity:.7'>Verificar conexion y que el servidor este activo.</small></div>";
   }
   btn.disabled=false;
   btn.innerHTML="&#128269; Analizar de nuevo";
