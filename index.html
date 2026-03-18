@@ -222,6 +222,57 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--border-glow);border-top-color:var(--green);border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .footer{text-align:center;padding:20px 0 4px;font-size:0.68rem;color:var(--text-muted);letter-spacing:0.06em}
+
+/* SIEMBRA Y ESQUEJE */
+.siem-mes-strip{display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap}
+.siem-mes-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text-muted);padding:4px 10px;border-radius:16px;font-size:0.72rem;font-weight:600;cursor:pointer;transition:all 0.18s}
+.siem-mes-btn.active{background:var(--green-glow);border-color:var(--border-glow);color:var(--green)}
+.siem-cultivo-card{background:var(--bg3);border-radius:11px;border:1px solid var(--border);overflow:hidden;margin-bottom:7px}
+.siem-cultivo-header{display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:10px;padding:10px 12px;cursor:pointer}
+.siem-cultivo-emoji{font-size:1.4rem;text-align:center}
+.siem-cultivo-nombre{font-size:0.84rem;font-weight:600;color:var(--text);margin-bottom:2px}
+.siem-cultivo-sub{font-size:0.7rem;color:var(--text-muted)}
+.siem-cultivo-badges{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.siem-badge{font-size:0.6rem;font-weight:700;padding:2px 6px;border-radius:8px;white-space:nowrap}
+.siem-badge.directa{background:rgba(96,168,224,0.15);color:var(--blue)}
+.siem-badge.almacigo{background:var(--green-glow);color:var(--green)}
+.siem-badge.luna{background:rgba(212,160,48,0.12);color:var(--amber)}
+.siem-cultivo-detalle{display:none;padding:0 12px 12px;border-top:1px solid var(--border)}
+.siem-cultivo-detalle.open{display:block}
+.siem-det-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.siem-det-item{background:var(--bg);border-radius:8px;padding:7px 9px;border:1px solid var(--border)}
+.siem-det-label{font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.07em;font-weight:600;margin-bottom:2px}
+.siem-det-val{font-size:0.78rem;color:var(--text);font-weight:500}
+.siem-det-tip{grid-column:1/-1;background:var(--green-glow);border:1px solid var(--border-glow);border-radius:8px;padding:7px 10px;font-size:0.76rem;color:var(--green);line-height:1.5;margin-top:2px}
+/* pasos */
+.siem-tecnica-list{display:flex;flex-direction:column;gap:8px}
+.siem-paso-card{background:var(--bg3);border-radius:12px;border:1px solid var(--border);overflow:hidden}
+.siem-paso-header{display:flex;align-items:center;gap:10px;padding:11px 13px}
+.siem-paso-num{width:26px;height:26px;border-radius:50%;background:var(--green-glow);border:1px solid var(--border-glow);color:var(--green);font-size:0.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.siem-paso-title{font-size:0.84rem;font-weight:600;color:var(--text)}
+.siem-paso-sub{font-size:0.7rem;color:var(--text-muted);margin-top:1px}
+.siem-paso-body{padding:0 13px 12px;border-top:1px solid var(--border)}
+.siem-metodo{background:var(--bg);border-radius:8px;padding:8px 10px;border:1px solid var(--border)}
+.siem-metodo-title{font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:2px}
+.siem-metodo-desc{font-size:0.74rem;color:var(--text-soft);line-height:1.4;margin-bottom:3px}
+.siem-metodo-ej{font-size:0.68rem;color:var(--text-muted);font-style:italic}
+.siem-prof-list{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+.siem-prof-item{display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:var(--bg);border-radius:7px;border:1px solid var(--border)}
+.siem-prof-cultivo{font-size:0.77rem;color:var(--text-soft)}
+.siem-prof-val{font-size:0.77rem;font-weight:600;color:var(--green)}
+/* esqueje grid */
+.siem-esq-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:6px}
+.siem-esq-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 8px;font-size:0.76rem;color:var(--text-soft);text-align:center}
+/* asociacion */
+.siem-asoc-list{display:flex;flex-direction:column;gap:7px}
+.siem-asoc-card{background:var(--bg3);border-radius:11px;border:1px solid var(--border);padding:10px 12px}
+.siem-asoc-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.siem-asoc-emoji{font-size:1.2rem}
+.siem-asoc-nombre{font-size:0.84rem;font-weight:600;color:var(--text)}
+.siem-asoc-buenas{font-size:0.74rem;color:var(--green);margin-bottom:3px}
+.siem-asoc-malas{font-size:0.74rem;color:var(--red)}
+.siem-asoc-tip{font-size:0.72rem;color:var(--text-muted);margin-top:4px;line-height:1.4;font-style:italic}
+
 </style>
 </head>
 <body>
@@ -291,6 +342,209 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
   </div>
   <div class="plaga-temporada-strip" id="plagaFiltros"></div>
   <div class="plaga-list" id="plagaList"></div>
+</div>
+
+<!-- SIEMBRA Y ESQUEJE -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-icon green">&#127793;</div>
+    <div><div class="card-title">Siembra y Esqueje</div><div class="card-sub">Cuando, como y que plantar en Buenos Aires</div></div>
+  </div>
+  <div class="tab-strip" id="siembraTabs">
+    <div class="tab-btn active" onclick="siembraTab('calendario',this)">&#128197; Calendario</div>
+    <div class="tab-btn" onclick="siembraTab('tecnica',this)">&#127806; Como sembrar</div>
+    <div class="tab-btn" onclick="siembraTab('esqueje',this)">&#9986; Esqueje</div>
+    <div class="tab-btn" onclick="siembraTab('asociacion',this)">&#129309; Asociacion</div>
+  </div>
+
+  <!-- TAB CALENDARIO -->
+  <div id="st-calendario" class="tab-panel active">
+    <div class="siem-mes-strip" id="siem-mes-strip"></div>
+    <div id="siem-cultivos-list"></div>
+  </div>
+
+  <!-- TAB TECNICA SIEMBRA -->
+  <div id="st-tecnica" class="tab-panel">
+    <div class="siem-tecnica-list">
+
+      <div class="siem-paso-card">
+        <div class="siem-paso-header">
+          <span class="siem-paso-num">1</span>
+          <div>
+            <div class="siem-paso-title">Elegir el metodo correcto</div>
+            <div class="siem-paso-sub">Directa o almacigo segun el cultivo</div>
+          </div>
+        </div>
+        <div class="siem-paso-body">
+          <div class="siem-metodo">
+            <div class="siem-metodo-title">&#127795; Siembra directa</div>
+            <div class="siem-metodo-desc">La semilla va directo al lugar definitivo. Para cultivos que no toleran trasplante.</div>
+            <div class="siem-metodo-ej">Zanahoria, remolacha, rabanito, arvejas, chauchas, zapallo, maiz</div>
+          </div>
+          <div class="siem-metodo" style="margin-top:8px">
+            <div class="siem-metodo-title">&#127793; Almacigo primero</div>
+            <div class="siem-metodo-desc">Se germina en bandeja o vasito y se trasplanta al crecer. Aprovecha mejor el espacio y la temporada.</div>
+            <div class="siem-metodo-ej">Tomate, pimiento, berenjena, brocoli, repollo, lechuga, apio, albahaca</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="siem-paso-card">
+        <div class="siem-paso-header">
+          <span class="siem-paso-num">2</span>
+          <div>
+            <div class="siem-paso-title">Profundidad de siembra</div>
+            <div class="siem-paso-sub">Regla general: 2 a 3 veces el diametro de la semilla</div>
+          </div>
+        </div>
+        <div class="siem-paso-body">
+          <div class="siem-prof-list">
+            <div class="siem-prof-item"><span class="siem-prof-cultivo">Tomate / Pimiento</span><span class="siem-prof-val">0.5 cm</span></div>
+            <div class="siem-prof-item"><span class="siem-prof-cultivo">Lechuga / Albahaca</span><span class="siem-prof-val">0.3 cm</span></div>
+            <div class="siem-prof-item"><span class="siem-prof-cultivo">Zanahoria / Rabanito</span><span class="siem-prof-val">1 cm</span></div>
+            <div class="siem-prof-item"><span class="siem-prof-cultivo">Zapallo / Pepino</span><span class="siem-prof-val">2 cm</span></div>
+            <div class="siem-prof-item"><span class="siem-prof-cultivo">Arveja / Chaucha</span><span class="siem-prof-val">3 cm</span></div>
+            <div class="siem-prof-item"><span class="siem-prof-cultivo">Papa (tuberculo)</span><span class="siem-prof-val">8-10 cm</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="siem-paso-card">
+        <div class="siem-paso-header">
+          <span class="siem-paso-num">3</span>
+          <div>
+            <div class="siem-paso-title">Cuando trasplantar el almacigo</div>
+            <div class="siem-paso-sub">Esperar el momento justo reduce el estres</div>
+          </div>
+        </div>
+        <div class="siem-paso-body" style="font-size:.8rem;color:var(--text-soft);line-height:1.6">
+          Trasplantar cuando la plantula tiene <strong style="color:var(--text)">2 pares de hojas verdaderas</strong> (no contar los cotiledones). Hacerlo en <strong style="color:var(--green)">Cuarto Creciente</strong>, a la tarde o en dia nublado para reducir el estres. Regar abundante antes y despues. No remover demasiado las raices.
+        </div>
+      </div>
+
+      <div class="siem-paso-card">
+        <div class="siem-paso-header">
+          <span class="siem-paso-num">4</span>
+          <div>
+            <div class="siem-paso-title">Espaciado entre plantas</div>
+            <div class="siem-paso-sub">En maceta o cantero</div>
+          </div>
+        </div>
+        <div class="siem-paso-body">
+          <div class="siem-prof-list">
+            <div class="siem-prof-item"><span class="siem-prof-cultivo">Lechuga</span><span class="siem-prof-val">20 x 20 cm</span></div>
+            <div class="siem-prof-item"><span class="siem-prof-cultivo">Tomate</span><span class="siem-prof-val">50 x 50 cm</span></div>
+            <div class="siem-prof-item"><span class="siem-prof-cultivo">Pimiento / Berenjena</span><span class="siem-prof-val">40 x 40 cm</span></div>
+            <div class="siem-prof-item"><span class="siem-prof-cultivo">Zanahoria</span><span class="siem-prof-val">5 x 20 cm</span></div>
+            <div class="siem-prof-item"><span class="siem-prof-cultivo">Albahaca</span><span class="siem-prof-val">20 x 20 cm</span></div>
+            <div class="siem-prof-item"><span class="siem-prof-cultivo">Zapallo / Calabaza</span><span class="siem-prof-val">100 x 100 cm</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TAB ESQUEJE -->
+  <div id="st-esqueje" class="tab-panel">
+    <div class="siem-tecnica-list">
+
+      <div class="siem-paso-card">
+        <div class="siem-paso-header">
+          <span class="siem-paso-num">&#9651;</span>
+          <div>
+            <div class="siem-paso-title">Cuando esquejar</div>
+            <div class="siem-paso-sub">Luna y estacion optima</div>
+          </div>
+        </div>
+        <div class="siem-paso-body" style="font-size:.8rem;color:var(--text-soft);line-height:1.6">
+          La mejor epoca es <strong style="color:var(--text)">Cuarto Menguante</strong>: la savia esta descendente y se concentra en las raices, favoreciendo el enraizamiento. Evitar Luna Nueva (savia minima) y Luna Llena (demasiada savia en hojas, el esqueje se deshidrata). En el aÃ±o: <strong style="color:var(--green)">primavera y verano</strong> para la mayoria de las especies.
+        </div>
+      </div>
+
+      <div class="siem-paso-card">
+        <div class="siem-paso-header">
+          <span class="siem-paso-num">1</span>
+          <div>
+            <div class="siem-paso-title">Seleccionar el tallo</div>
+            <div class="siem-paso-sub">El material de partida es clave</div>
+          </div>
+        </div>
+        <div class="siem-paso-body" style="font-size:.8rem;color:var(--text-soft);line-height:1.6">
+          Elegir un tallo <strong style="color:var(--text)">sano, sin flores y semi-leÃ±oso</strong> (ni muy tierno ni muy duro). Largo ideal: <strong style="color:var(--green)">8 a 15 cm</strong> con al menos 2-3 nudos. Cortar con tijera limpia y desinfectada en angulo de 45 grados justo por debajo de un nudo.
+        </div>
+      </div>
+
+      <div class="siem-paso-card">
+        <div class="siem-paso-header">
+          <span class="siem-paso-num">2</span>
+          <div>
+            <div class="siem-paso-title">Preparar el esqueje</div>
+            <div class="siem-paso-sub">Antes de plantar</div>
+          </div>
+        </div>
+        <div class="siem-paso-body" style="font-size:.8rem;color:var(--text-soft);line-height:1.6">
+          Retirar las hojas del tercio inferior (las que van a quedar enterradas). Dejar solo 2-3 hojas arriba, y si son grandes cortarlas a la mitad para reducir la transpiracion. Sumergir la base en <strong style="color:var(--green)">gel de aloe vera</strong> o polvo de canela (enraizante natural + fungicida).
+        </div>
+      </div>
+
+      <div class="siem-paso-card">
+        <div class="siem-paso-header">
+          <span class="siem-paso-num">3</span>
+          <div>
+            <div class="siem-paso-title">Plantar y mantener</div>
+            <div class="siem-paso-sub">Sustrato y cuidados</div>
+          </div>
+        </div>
+        <div class="siem-paso-body" style="font-size:.8rem;color:var(--text-soft);line-height:1.6">
+          Usar el <strong style="color:var(--blue)">Sustrato de Enraizamiento</strong> (perlita 50% + vermiculita 25%). Enterrar 1/3 del esqueje. Cubrir con bolsa transparente o botella cortada para crear humedad. Colocar con <strong style="color:var(--text)">luz indirecta</strong>, no sol directo. Regar muy poco: el sustrato debe estar apenas humedo. Las raices aparecen en 2-4 semanas.
+        </div>
+      </div>
+
+      <div class="siem-paso-card">
+        <div class="siem-paso-header">
+          <span class="siem-paso-num">4</span>
+          <div>
+            <div class="siem-paso-title">Como saber si prendio</div>
+            <div class="siem-paso-sub">SeÃ±ales de exito</div>
+          </div>
+        </div>
+        <div class="siem-paso-body" style="font-size:.8rem;color:var(--text-soft);line-height:1.6">
+          El esqueje prendio cuando: aparecen <strong style="color:var(--green)">hojas nuevas</strong>, el tallo se mantiene turgente y verde, y al tirar suavemente se siente resistencia (raices aferradas). Esperar 2 semanas mas antes de trasplantar al sustrato definitivo.
+        </div>
+      </div>
+
+      <div class="siem-paso-card">
+        <div class="siem-paso-header">
+          <span class="siem-paso-num">&#9733;</span>
+          <div>
+            <div class="siem-paso-title">Plantas faciles de esquejar</div>
+            <div class="siem-paso-sub">Para empezar en Buenos Aires</div>
+          </div>
+        </div>
+        <div class="siem-paso-body">
+          <div class="siem-esq-grid">
+            <div class="siem-esq-item">&#127807; Albahaca</div>
+            <div class="siem-esq-item">&#127807; Romero</div>
+            <div class="siem-esq-item">&#127807; Menta</div>
+            <div class="siem-esq-item">&#127807; Oregano</div>
+            <div class="siem-esq-item">&#127813; Tomate</div>
+            <div class="siem-esq-item">&#127800; Geranio</div>
+            <div class="siem-esq-item">&#127797; Suculentas</div>
+            <div class="siem-esq-item">&#127807; Lavanda</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TAB ASOCIACION DE CULTIVOS -->
+  <div id="st-asociacion" class="tab-panel">
+    <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:10px;line-height:1.5">Plantar especies que se benefician mutuamente reduce plagas, mejora el suelo y aprovecha mejor el espacio.</div>
+    <div class="siem-asoc-list" id="siem-asoc-list"></div>
+  </div>
+
 </div>
 
 <!-- NUTRIBOT -->
@@ -679,9 +933,498 @@ async function iniciarCamara(){try{var s=await navigator.mediaDevices.getUserMed
 function detenerStream(){if(streamActivo){streamActivo.getTracks().forEach(function(t){t.stop();});streamActivo=null;}document.getElementById("camVideo").srcObject=null;}
 function capturarFoto(){var v=document.getElementById("camVideo"),c=document.getElementById("camCanvas");c.width=v.videoWidth||640;c.height=v.videoHeight||480;c.getContext("2d").drawImage(v,0,0,c.width,c.height);imagenBase64=c.toDataURL("image/jpeg",0.92).split(",")[1];imageMediaType="image/jpeg";detenerStream();irEstado(2);resetRes();}
 function cargarDesdeGaleria(inp){if(!inp.files||!inp.files[0])return;var f=inp.files[0];imageMediaType=f.type||"image/jpeg";var r=new FileReader();r.onload=function(e){var img=new Image();img.onload=function(){var c=document.getElementById("camCanvas");c.width=img.width;c.height=img.height;c.getContext("2d").drawImage(img,0,0);imagenBase64=e.target.result.split(",")[1];detenerStream();irEstado(2);resetRes();};img.src=e.target.result;};r.readAsDataURL(f);}
-function cerrarCamara(){detenerStream();irEstado(0);}
-function reintentar(){imagenBase64=null;irEstado(0);resetRes();}
-function volverAlInicio(){imagenBase64=null;irEstado(0);resetRes();}
+function cerrarCamara(){detenerStream();
+/* =============================================
+   SIEMBRA Y ESQUEJE
+   ============================================= */
+function siembraTab(id, btn) {
+  document.querySelectorAll("#siembraTabs .tab-btn").forEach(function(b){b.classList.remove("active");});
+  document.querySelectorAll(".tab-panel[id^='st-']").forEach(function(p){p.classList.remove("active");});
+  btn.classList.add("active");
+  document.getElementById("st-"+id).classList.add("active");
+}
+
+var CULTIVOS = [
+  {e:"&#127813;",n:"Tomate",tipo:"almacigo",
+   meses:[8,9,10],cosecha:[12,1,2,3],luna:"Creciente",
+   prof:"0.5cm",espaciado:"50x50cm",dias_germ:"7-10",dias_cosecha:"90-120",
+   tip:"Sembrar en agosto-septiembre en almacigo cubierto. Trasplantar cuando tenga 4 hojas. Requiere tutor desde los 30cm."},
+  {e:"&#127798;",n:"Pimiento",tipo:"almacigo",
+   meses:[8,9],cosecha:[12,1,2],luna:"Creciente",
+   prof:"0.5cm",espaciado:"40x40cm",dias_germ:"10-15",dias_cosecha:"100-130",
+   tip:"Necesita mucho calor para germinar (25-28C). Empezar en agosto bajo cubierta. Muy sensible a las heladas."},
+  {e:"&#129364;",n:"Lechuga",tipo:"almacigo",
+   meses:[2,3,4,7,8,9],cosecha:[4,5,6,9,10,11],luna:"Creciente",
+   prof:"0.3cm",espaciado:"20x20cm",dias_germ:"5-7",dias_cosecha:"60-80",
+   tip:"Se siembra casi todo el ano. Evitar en enero-febrero (demasiado calor). Ideal en media sombra en verano."},
+  {e:"&#129382;",n:"Zanahoria",tipo:"directa",
+   meses:[3,4,5,8,9],cosecha:[6,7,8,11,12],luna:"Menguante",
+   prof:"1cm",espaciado:"5x20cm",dias_germ:"10-14",dias_cosecha:"80-100",
+   tip:"Solo siembra directa. Suelo suelto y profundo, sin piedras. Aclarar a 5cm cuando tenga 5cm de altura."},
+  {e:"&#129365;",n:"Remolacha",tipo:"directa",
+   meses:[3,4,8,9],cosecha:[6,7,11,12],luna:"Menguante",
+   prof:"2cm",espaciado:"10x25cm",dias_germ:"7-10",dias_cosecha:"70-90",
+   tip:"Tolera el frio. Remojar las semillas 12hs antes de sembrar para acelerar la germinacion."},
+  {e:"&#127807;",n:"Albahaca",tipo:"almacigo",
+   meses:[9,10,11],cosecha:[11,12,1,2,3],luna:"Creciente",
+   prof:"0.3cm",espaciado:"20x20cm",dias_germ:"5-8",dias_cosecha:"45-60",
+   tip:"Muy sensible al frio. No sembrar antes de septiembre en Buenos Aires. Cortar las flores para que siga produciendo hojas."},
+  {e:"&#129388;",n:"Espinaca",tipo:"directa",
+   meses:[2,3,4,7,8],cosecha:[4,5,6,9,10],luna:"Creciente",
+   prof:"1cm",espaciado:"10x20cm",dias_germ:"5-8",dias_cosecha:"50-70",
+   tip:"Cultivo de estacion fria. En verano se espi­ga rapido. Ideal otoÃ±o e invierno en Buenos Aires."},
+  {e:"&#129382;",n:"Zapallo",tipo:"directa",
+   meses:[9,10,11],cosecha:[1,2,3,4],luna:"Creciente",
+   prof:"2cm",espaciado:"100x100cm",dias_germ:"5-10",dias_cosecha:"90-120",
+   tip:"Necesita mucho espacio. Plantar en grupos de 2-3 semillas y dejar solo la mas fuerte. Regar al pie."},
+  {e:"&#127821;",n:"Frutilla",tipo:"almacigo",
+   meses:[2,3,7,8],cosecha:[9,10,11,12],luna:"Creciente",
+   prof:"sup",espaciado:"30x30cm",dias_germ:"14-21",dias_cosecha:"90",
+   tip:"Plantar los estolones directamente. Cubrir con paja en invierno. Fructifica en primavera siguiente."},
+  {e:"&#129371;",n:"Rabanito",tipo:"directa",
+   meses:[3,4,5,8,9,10],cosecha:[4,5,6,9,10,11],luna:"Menguante",
+   prof:"1cm",espaciado:"5x15cm",dias_germ:"4-6",dias_cosecha:"25-35",
+   tip:"El cultivo mas rapido de la huerta. Ideal para impacientes y para chicos. Sembrar escalonado cada 2 semanas."},
+  {e:"&#127812;",n:"Ajo",tipo:"directa",
+   meses:[4,5,6],cosecha:[10,11,12],luna:"Menguante",
+   prof:"5cm",espaciado:"10x20cm",dias_germ:"10-15",dias_cosecha:"180-210",
+   tip:"Plantar los dientes separados en otoÃ±o. Cosechar cuando las hojas se secan en primavera. Repele muchas plagas."},
+  {e:"&#129365;",n:"Cebolla",tipo:"almacigo",
+   meses:[2,3,4],cosecha:[8,9,10],luna:"Menguante",
+   prof:"0.5cm",espaciado:"10x20cm",dias_germ:"10-12",dias_cosecha:"150-180",
+   tip:"Sembrar en almacigo en verano-otoÃ±o. Trasplantar cuando el plantino tenga el grosor de un lapiz."},
+];
+
+var MESES_NOMBRES = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+var mesFiltro = new Date().getMonth() + 1; // mes actual 1-12
+
+(function buildCalendario(){
+  var strip = document.getElementById("siem-mes-strip");
+  MESES_NOMBRES.forEach(function(m, idx){
+    var btn = document.createElement("div");
+    btn.className = "siem-mes-btn" + (idx+1===mesFiltro?" active":"");
+    btn.textContent = m;
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".siem-mes-btn").forEach(function(b){b.classList.remove("active");});
+      btn.classList.add("active");
+      mesFiltro = idx+1;
+      renderCultivos();
+    });
+    strip.appendChild(btn);
+  });
+  renderCultivos();
+})();
+
+var cultDetAbierto = null;
+function renderCultivos(){
+  var list = document.getElementById("siem-cultivos-list");
+  list.innerHTML = ""; cultDetAbierto = null;
+  var filtrados = CULTIVOS.filter(function(c){ return c.meses.indexOf(mesFiltro) >= 0; });
+  if(filtrados.length === 0){
+    list.innerHTML = "<div style='text-align:center;padding:18px;font-size:.8rem;color:var(--text-muted)'>No hay cultivos recomendados para este mes.<br>Revisa los meses cercanos.</div>";
+    return;
+  }
+  filtrados.forEach(function(c){
+    var card = document.createElement("div"); card.className = "siem-cultivo-card";
+    card.innerHTML =
+      "<div class='siem-cultivo-header' onclick='toggleCultivo(this)'>" +
+        "<div class='siem-cultivo-emoji'>" + c.e + "</div>" +
+        "<div><div class='siem-cultivo-nombre'>" + c.n + "</div>" +
+        "<div class='siem-cultivo-sub'>Germina en " + c.dias_germ + " dias &middot; Cosecha en " + c.dias_cosecha + " dias</div></div>" +
+        "<div class::33::='siem-cultivo-badges'>" +
+          "<span class='siem-badge " + c.tipo + "'>" + (c.tipo==="directa"?"Directa":"Almacigo") + "</span>" +
+          "<span class='siem-badge luna'>" + c.luna + "</span>" +
+        "</div>" +
+      "</div>" +
+      "<div class='siem-cultivo-detalle'>" +
+        "<div class='siem-det-grid'>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Profundidad</div><div class='siem-det-val'>" + c.prof + "</div></div>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Espaciado</div><div class='siem-det-val'>" + c.espaciado + "</div></div>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Luna ideal</div><div class='siem-det-val'>" + c.luna + "</div></div>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Cosecha en</div><div class='siem-det-val'>" + c.dias_cosecha + " dias</div></div>" +
+          "<div class='siem-det-tip'>&#127775; " + c.tip + "</div>" +
+        "</div>" +
+      "</div>";
+    list.appendChild(card);
+  });
+}
+
+function toggleCultivo(header){
+  var det = header.nextElementSibling;
+  if(det.classList.contains("open")){det.classList.remove("open");cultDetAbierto=null;}
+  else{if(cultDetAbierto)cultDetAbierto.classList.remove("open");det.classList.add("open");cultDetAbierto=det;}
+}
+
+/* ASOCIACION */
+var ASOCIACIONES = [
+  {e:"&#127813;",n:"Tomate",
+   buenas:["Albahaca (repele mosca blanca y mejora el sabor)","Zanahoria (afloja el suelo cerca de raices)","Oregano y perejil","CalÃ©ndula (repele nematodos)"],
+   malas:["Hinojo (inhibe el crecimiento)","Repollo (compiten por nutrientes)"],
+   tip:"El tomate con albahaca es la asociacion clasica de la huerta organica argentina."},
+  {e:"&#129388;",n:"Lechuga",
+   buenas:["Zanahoria (convivencia perfecta)","Rabanito (uso del espacio entre plantas)","Frutilla","Cebollin"],
+   malas:["Apio (compiten por espacio y agua)"],
+   tip:"La lechuga tolera sombra parcial: plantar al pie de cultivos altos como tomate."},
+  {e:"&#129382;",n:"Zanahoria",
+   buenas:["Cebolla y ajo (repelen mosca de la zanahoria)","Lechuga","Tomate","Romero"],
+   malas:["Eneldo (inhibe la germinacion)","Remolacha (en grandes cantidades)"],
+   tip:"Plantar cebollin intercalado entre zanahorias reduce el ataque de la mosca hasta un 60%."},
+  {e:"&#127807;",n:"Albahaca",
+   buenas:["Tomate (sinergia total)","Pimiento","Esparragos"],
+   malas:["Salvia (se inhiben mutuamente)"],
+   tip:"La albahaca mejora el sabor del tomate cuando crecen juntos. Se dice que tambien lo protege del oidio."},
+  {e:"&#129371;",n:"Rabanito",
+   buenas:["Zanahoria (marcador de filas)","Pepino","Espinaca","Lechuga"],
+   malas:["Eneldo"],
+   tip:"El rabanito actua como cultivo trampa para la mosca blanca, protegiendo a las plantas vecinas."},
+  {e:"&#127812;",n:"Ajo",
+   buenas:["Todas las roses","Tomate","Zanahoria","Lechuga"],
+   malas:["Arveja","Chaucha (leguminosas en general)"],
+   tip:"El ajo es el repelente universal de la huerta. Plantarlo como borde exterior de cualquier cantero."},
+];
+
+(function buildAsociacion(){
+  var list = document.getElementById("siem-asoc-list");
+  ASOCIACIONES.forEach(function(a){
+    var card = document.createElement("div"); card.className = "siem-asoc-card";
+    card.innerHTML =
+      "<div class='siem-asoc-header'><span class='siem-asoc-emoji'>" + a.e + "</span><span class='siem-asoc-nombre'>" + a.n + "</span></div>" +
+      "<div class='siem-asoc-buenas'>&#10003; Buenas companieras: " + a.buenas.join(", ") + "</div>" +
+      "<div class='siem-asoc-malas'>&#10005; Evitar cerca: " + a.malas.join(", ") + "</div>" +
+      "<div class='siem-asoc-tip'>" + a.tip + "</div>";
+    list.appendChild(card);
+  });
+})();
+
+irEstado(0);}
+function reintentar(){imagenBase64=null;
+/* =============================================
+   SIEMBRA Y ESQUEJE
+   ============================================= */
+function siembraTab(id, btn) {
+  document.querySelectorAll("#siembraTabs .tab-btn").forEach(function(b){b.classList.remove("active");});
+  document.querySelectorAll(".tab-panel[id^='st-']").forEach(function(p){p.classList.remove("active");});
+  btn.classList.add("active");
+  document.getElementById("st-"+id).classList.add("active");
+}
+
+var CULTIVOS = [
+  {e:"&#127813;",n:"Tomate",tipo:"almacigo",
+   meses:[8,9,10],cosecha:[12,1,2,3],luna:"Creciente",
+   prof:"0.5cm",espaciado:"50x50cm",dias_germ:"7-10",dias_cosecha:"90-120",
+   tip:"Sembrar en agosto-septiembre en almacigo cubierto. Trasplantar cuando tenga 4 hojas. Requiere tutor desde los 30cm."},
+  {e:"&#127798;",n:"Pimiento",tipo:"almacigo",
+   meses:[8,9],cosecha:[12,1,2],luna:"Creciente",
+   prof:"0.5cm",espaciado:"40x40cm",dias_germ:"10-15",dias_cosecha:"100-130",
+   tip:"Necesita mucho calor para germinar (25-28C). Empezar en agosto bajo cubierta. Muy sensible a las heladas."},
+  {e:"&#129364;",n:"Lechuga",tipo:"almacigo",
+   meses:[2,3,4,7,8,9],cosecha:[4,5,6,9,10,11],luna:"Creciente",
+   prof:"0.3cm",espaciado:"20x20cm",dias_germ:"5-7",dias_cosecha:"60-80",
+   tip:"Se siembra casi todo el ano. Evitar en enero-febrero (demasiado calor). Ideal en media sombra en verano."},
+  {e:"&#129382;",n:"Zanahoria",tipo:"directa",
+   meses:[3,4,5,8,9],cosecha:[6,7,8,11,12],luna:"Menguante",
+   prof:"1cm",espaciado:"5x20cm",dias_germ:"10-14",dias_cosecha:"80-100",
+   tip:"Solo siembra directa. Suelo suelto y profundo, sin piedras. Aclarar a 5cm cuando tenga 5cm de altura."},
+  {e:"&#129365;",n:"Remolacha",tipo:"directa",
+   meses:[3,4,8,9],cosecha:[6,7,11,12],luna:"Menguante",
+   prof:"2cm",espaciado:"10x25cm",dias_germ:"7-10",dias_cosecha:"70-90",
+   tip:"Tolera el frio. Remojar las semillas 12hs antes de sembrar para acelerar la germinacion."},
+  {e:"&#127807;",n:"Albahaca",tipo:"almacigo",
+   meses:[9,10,11],cosecha:[11,12,1,2,3],luna:"Creciente",
+   prof:"0.3cm",espaciado:"20x20cm",dias_germ:"5-8",dias_cosecha:"45-60",
+   tip:"Muy sensible al frio. No sembrar antes de septiembre en Buenos Aires. Cortar las flores para que siga produciendo hojas."},
+  {e:"&#129388;",n:"Espinaca",tipo:"directa",
+   meses:[2,3,4,7,8],cosecha:[4,5,6,9,10],luna:"Creciente",
+   prof:"1cm",espaciado:"10x20cm",dias_germ:"5-8",dias_cosecha:"50-70",
+   tip:"Cultivo de estacion fria. En verano se espi­ga rapido. Ideal otoÃ±o e invierno en Buenos Aires."},
+  {e:"&#129382;",n:"Zapallo",tipo:"directa",
+   meses:[9,10,11],cosecha:[1,2,3,4],luna:"Creciente",
+   prof:"2cm",espaciado:"100x100cm",dias_germ:"5-10",dias_cosecha:"90-120",
+   tip:"Necesita mucho espacio. Plantar en grupos de 2-3 semillas y dejar solo la mas fuerte. Regar al pie."},
+  {e:"&#127821;",n:"Frutilla",tipo:"almacigo",
+   meses:[2,3,7,8],cosecha:[9,10,11,12],luna:"Creciente",
+   prof:"sup",espaciado:"30x30cm",dias_germ:"14-21",dias_cosecha:"90",
+   tip:"Plantar los estolones directamente. Cubrir con paja en invierno. Fructifica en primavera siguiente."},
+  {e:"&#129371;",n:"Rabanito",tipo:"directa",
+   meses:[3,4,5,8,9,10],cosecha:[4,5,6,9,10,11],luna:"Menguante",
+   prof:"1cm",espaciado:"5x15cm",dias_germ:"4-6",dias_cosecha:"25-35",
+   tip:"El cultivo mas rapido de la huerta. Ideal para impacientes y para chicos. Sembrar escalonado cada 2 semanas."},
+  {e:"&#127812;",n:"Ajo",tipo:"directa",
+   meses:[4,5,6],cosecha:[10,11,12],luna:"Menguante",
+   prof:"5cm",espaciado:"10x20cm",dias_germ:"10-15",dias_cosecha:"180-210",
+   tip:"Plantar los dientes separados en otoÃ±o. Cosechar cuando las hojas se secan en primavera. Repele muchas plagas."},
+  {e:"&#129365;",n:"Cebolla",tipo:"almacigo",
+   meses:[2,3,4],cosecha:[8,9,10],luna:"Menguante",
+   prof:"0.5cm",espaciado:"10x20cm",dias_germ:"10-12",dias_cosecha:"150-180",
+   tip:"Sembrar en almacigo en verano-otoÃ±o. Trasplantar cuando el plantino tenga el grosor de un lapiz."},
+];
+
+var MESES_NOMBRES = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+var mesFiltro = new Date().getMonth() + 1; // mes actual 1-12
+
+(function buildCalendario(){
+  var strip = document.getElementById("siem-mes-strip");
+  MESES_NOMBRES.forEach(function(m, idx){
+    var btn = document.createElement("div");
+    btn.className = "siem-mes-btn" + (idx+1===mesFiltro?" active":"");
+    btn.textContent = m;
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".siem-mes-btn").forEach(function(b){b.classList.remove("active");});
+      btn.classList.add("active");
+      mesFiltro = idx+1;
+      renderCultivos();
+    });
+    strip.appendChild(btn);
+  });
+  renderCultivos();
+})();
+
+var cultDetAbierto = null;
+function renderCultivos(){
+  var list = document.getElementById("siem-cultivos-list");
+  list.innerHTML = ""; cultDetAbierto = null;
+  var filtrados = CULTIVOS.filter(function(c){ return c.meses.indexOf(mesFiltro) >= 0; });
+  if(filtrados.length === 0){
+    list.innerHTML = "<div style='text-align:center;padding:18px;font-size:.8rem;color:var(--text-muted)'>No hay cultivos recomendados para este mes.<br>Revisa los meses cercanos.</div>";
+    return;
+  }
+  filtrados.forEach(function(c){
+    var card = document.createElement("div"); card.className = "siem-cultivo-card";
+    card.innerHTML =
+      "<div class='siem-cultivo-header' onclick='toggleCultivo(this)'>" +
+        "<div class='siem-cultivo-emoji'>" + c.e + "</div>" +
+        "<div><div class='siem-cultivo-nombre'>" + c.n + "</div>" +
+        "<div class='siem-cultivo-sub'>Germina en " + c.dias_germ + " dias &middot; Cosecha en " + c.dias_cosecha + " dias</div></div>" +
+        "<div class='siem-cultivo-badges'>" +
+          "<span class='siem-badge " + c.tipo + "'>" + (c.tipo==="directa"?"Directa":"Almacigo") + "</span>" +
+          "<span class='siem-badge luna'>" + c.luna + "</span>" +
+        "</div>" +
+      "</div>" +
+      "<div class='siem-cultivo-detalle'>" +
+        "<div class='siem-det-grid'>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Profundidad</div><div class='siem-det-val'>" + c.prof + "</div></div>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Espaciado</div><div class='siem-det-val'>" + c.espaciado + "</div></div>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Luna ideal</div><div class='siem-det-val'>" + c.luna + "</div></div>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Cosecha en</div><div class='siem-det-val'>" + c.dias_cosecha + " dias</div></div>" +
+          "<div class='siem-det-tip'>&#127775; " + c.tip + "</div>" +
+        "</div>" +
+      "</div>";
+    list.appendChild(card);
+  });
+}
+
+function toggleCultivo(header){
+  var det = header.nextElementSibling;
+  if(det.classList.contains("open")){det.classList.remove("open");cultDetAbierto=null;}
+  else{if(cultDetAbierto)cultDetAbierto.classList.remove("open");det.classList.add("open");cultDetAbierto=det;}
+}
+
+/* ASOCIACION */
+var ASOCIACIONES = [
+  {e:"&#127813;",n:"Tomate",
+   buenas:["Albahaca (repele mosca blanca y mejora el sabor)","Zanahoria (afloja el suelo cerca de raices)","Oregano y perejil","CalÃ©ndula (repele nematodos)"],
+   malas:["Hinojo (inhibe el crecimiento)","Repollo (compiten por nutrientes)"],
+   tip:"El tomate con albahaca es la asociacion clasica de la huerta organica argentina."},
+  {e:"&#129388;",n:"Lechuga",
+   buenas:["Zanahoria (convivencia perfecta)","Rabanito (uso del espacio entre plantas)","Frutilla","Cebollin"],
+   malas:["Apio (compiten por espacio y agua)"],
+   tip:"La lechuga tolera sombra parcial: plantar al pie de cultivos altos como tomate."},
+  {e:"&#129382;",n:"Zanahoria",
+   buenas:["Cebolla y ajo (repelen mosca de la zanahoria)","Lechuga","Tomate","Romero"],
+   malas:["Eneldo (inhibe la germinacion)","Remolacha (en grandes cantidades)"],
+   tip:"Plantar cebollin intercalado entre zanahorias reduce el ataque de la mosca hasta un 60%."},
+  {e:"&#127807;",n:"Albahaca",
+   buenas:["Tomate (sinergia total)","Pimiento","Esparragos"],
+   malas:["Salvia (se inhiben mutuamente)"],
+   tip:"La albahaca mejora el sabor del tomate cuando crecen juntos. Se dice que tambien lo protege del oidio."},
+  {e:"&#129371;",n:"Rabanito",
+   buenas:["Zanahoria (marcador de filas)","Pepino","Espinaca","Lechuga"],
+   malas:["Eneldo"],
+   tip:"El rabanito actua como cultivo trampa para la mosca blanca, protegiendo a las plantas vecinas."},
+  {e:"&#127812;",n:"Ajo",
+   buenas:["Todas las roses","Tomate","Zanahoria","Lechuga"],
+   malas:["Arveja","Chaucha (leguminosas en general)"],
+   tip:"El ajo es el repelente universal de la huerta. Plantarlo como borde exterior de cualquier cantero."},
+];
+
+(function buildAsociacion(){
+  var list = document.getElementById("siem-asoc-list");
+  ASOCIACIONES.forEach(function(a){
+    var card = document.createElement("div"); card.className = "siem-asoc-card";
+    card.innerHTML =
+      "<div class='siem-asoc-header'><span class='siem-asoc-emoji'>" + a.e + "</span><span class='siem-asoc-nombre'>" + a.n + "</span></div>" +
+      "<div class='siem-asoc-buenas'>&#10003; Buenas companieras: " + a.buenas.join(", ") + "</div>" +
+      "<div class='siem-asoc-malas'>&#10005; Evitar cerca: " + a.malas.join(", ") + "</div>" +
+      "<div class='siem-asoc-tip'>" + a.tip + "</div>";
+    list.appendChild(card);
+  });
+})();
+
+irEstado(0);resetRes();}
+function volverAlInicio(){imagenBase64=null;
+/* =============================================
+   SIEMBRA Y ESQUEJE
+   ============================================= */
+function siembraTab(id, btn) {
+  document.querySelectorAll("#siembraTabs .tab-btn").forEach(function(b){b.classList.remove("active");});
+  document.querySelectorAll(".tab-panel[id^='st-']").forEach(function(p){p.classList.remove("active");});
+  btn.classList.add("active");
+  document.getElementById("st-"+id).classList.add("active");
+}
+
+var CULTIVOS = [
+  {e:"&#127813;",n:"Tomate",tipo:"almacigo",
+   meses:[8,9,10],cosecha:[12,1,2,3],luna:"Creciente",
+   prof:"0.5cm",espaciado:"50x50cm",dias_germ:"7-10",dias_cosecha:"90-120",
+   tip:"Sembrar en agosto-septiembre en almacigo cubierto. Trasplantar cuando tenga 4 hojas. Requiere tutor desde los 30cm."},
+  {e:"&#127798;",n:"Pimiento",tipo:"almacigo",
+   meses:[8,9],cosecha:[12,1,2],luna:"Creciente",
+   prof:"0.5cm",espaciado:"40x40cm",dias_germ:"10-15",dias_cosecha:"100-130",
+   tip:"Necesita mucho calor para germinar (25-28C). Empezar en agosto bajo cubierta. Muy sensible a las heladas."},
+  {e:"&#129364;",n:"Lechuga",tipo:"almacigo",
+   meses:[2,3,4,7,8,9],cosecha:[4,5,6,9,10,11],luna:"Creciente",
+   prof:"0.3cm",espaciado:"20x20cm",dias_germ:"5-7",dias_cosecha:"60-80",
+   tip:"Se siembra casi todo el ano. Evitar en enero-febrero (demasiado calor). Ideal en media sombra en verano."},
+  {e:"&#129382;",n:"Zanahoria",tipo:"directa",
+   meses:[3,4,5,8,9],cosecha:[6,7,8,11,12],luna:"Menguante",
+   prof:"1cm",espaciado:"5x20cm",dias_germ:"10-14",dias_cosecha:"80-100",
+   tip:"Solo siembra directa. Suelo suelto y profundo, sin piedras. Aclarar a 5cm cuando tenga 5cm de altura."},
+  {e:"&#129365;",n:"Remolacha",tipo:"directa",
+   meses:[3,4,8,9],cosecha:[6,7,11,12],luna:"Menguante",
+   prof:"2cm",espaciado:"10x25cm",dias_germ:"7-10",dias_cosecha:"70-90",
+   tip:"Tolera el frio. Remojar las semillas 12hs antes de sembrar para acelerar la germinacion."},
+  {e:"&#127807;",n:"Albahaca",tipo:"almacigo",
+   meses:[9,10,11],cosecha:[11,12,1,2,3],luna:"Creciente",
+   prof:"0.3cm",espaciado:"20x20cm",dias_germ:"5-8",dias_cosecha:"45-60",
+   tip:"Muy sensible al frio. No sembrar antes de septiembre en Buenos Aires. Cortar las flores para que siga produciendo hojas."},
+  {e:"&#129388;",n:"Espinaca",tipo:"directa",
+   meses:[2,3,4,7,8],cosecha:[4,5,6,9,10],luna:"Creciente",
+   prof:"1cm",espaciado:"10x20cm",dias_germ:"5-8",dias_cosecha:"50-70",
+   tip:"Cultivo de estacion fria. En verano se espi­ga rapido. Ideal otoÃ±o e invierno en Buenos Aires."},
+  {e:"&#129382;",n:"Zapallo",tipo:"directa",
+   meses:[9,10,11],cosecha:[1,2,3,4],luna:"Creciente",
+   prof:"2cm",espaciado:"100x100cm",dias_germ:"5-10",dias_cosecha:"90-120",
+   tip:"Necesita mucho espacio. Plantar en grupos de 2-3 semillas y dejar solo la mas fuerte. Regar al pie."},
+  {e:"&#127821;",n:"Frutilla",tipo:"almacigo",
+   meses:[2,3,7,8],cosecha:[9,10,11,12],luna:"Creciente",
+   prof:"sup",espaciado:"30x30cm",dias_germ:"14-21",dias_cosecha:"90",
+   tip:"Plantar los estolones directamente. Cubrir con paja en invierno. Fructifica en primavera siguiente."},
+  {e:"&#129371;",n:"Rabanito",tipo:"directa",
+   meses:[3,4,5,8,9,10],cosecha:[4,5,6,9,10,11],luna:"Menguante",
+   prof:"1cm",espaciado:"5x15cm",dias_germ:"4-6",dias_cosecha:"25-35",
+   tip:"El cultivo mas rapido de la huerta. Ideal para impacientes y para chicos. Sembrar escalonado cada 2 semanas."},
+  {e:"&#127812;",n:"Ajo",tipo:"directa",
+   meses:[4,5,6],cosecha:[10,11,12],luna:"Menguante",
+   prof:"5cm",espaciado:"10x20cm",dias_germ:"10-15",dias_cosecha:"180-210",
+   tip:"Plantar los dientes separados en otoÃ±o. Cosechar cuando las hojas se secan en primavera. Repele muchas plagas."},
+  {e:"&#129365;",n:"Cebolla",tipo:"almacigo",
+   meses:[2,3,4],cosecha:[8,9,10],luna:"Menguante",
+   prof:"0.5cm",espaciado:"10x20cm",dias_germ:"10-12",dias_cosecha:"150-180",
+   tip:"Sembrar en almacigo en verano-otoÃ±o. Trasplantar cuando el plantino tenga el grosor de un lapiz."},
+];
+
+var MESES_NOMBRES = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+var mesFiltro = new Date().getMonth() + 1; // mes actual 1-12
+
+(function buildCalendario(){
+  var strip = document.getElementById("siem-mes-strip");
+  MESES_NOMBRES.forEach(function(m, idx){
+    var btn = document.createElement("div");
+    btn.className = "siem-mes-btn" + (idx+1===mesFiltro?" active":"");
+    btn.textContent = m;
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".siem-mes-btn").forEach(function(b){b.classList.remove("active");});
+      btn.classList.add("active");
+      mesFiltro = idx+1;
+      renderCultivos();
+    });
+    strip.appendChild(btn);
+  });
+  renderCultivos();
+})();
+
+var cultDetAbierto = null;
+function renderCultivos(){
+  var list = document.getElementById("siem-cultivos-list");
+  list.innerHTML = ""; cultDetAbierto = null;
+  var filtrados = CULTIVOS.filter(function(c){ return c.meses.indexOf(mesFiltro) >= 0; });
+  if(filtrados.length === 0){
+    list.innerHTML = "<div style='text-align:center;padding:18px;font-size:.8rem;color:var(--text-muted)'>No hay cultivos recomendados para este mes.<br>Revisa los meses cercanos.</div>";
+    return;
+  }
+  filtrados.forEach(function(c){
+    var card = document.createElement("div"); card.className = "siem-cultivo-card";
+    card.innerHTML =
+      "<div class='siem-cultivo-header' onclick='toggleCultivo(this)'>" +
+        "<div class='siem-cultivo-emoji'>" + c.e + "</div>" +
+        "<div><div class='siem-cultivo-nombre'>" + c.n + "</div>" +
+        "<div class='siem-cultivo-sub'>Germina en " + c.dias_germ + " dias &middot; Cosecha en " + c.dias_cosecha + " dias</div></div>" +
+        "<div class='siem-cultivo-badges'>" +
+          "<span class='siem-badge " + c.tipo + "'>" + (c.tipo==="directa"?"Directa":"Almacigo") + "</span>" +
+          "<span class='siem-badge luna'>" + c.luna + "</span>" +
+        "</div>" +
+      "</div>" +
+      "<div class='siem-cultivo-detalle'>" +
+        "<div class='siem-det-grid'>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Profundidad</div><div class='siem-det-val'>" + c.prof + "</div></div>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Espaciado</div><div class='siem-det-val'>" + c.espaciado + "</div></div>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Luna ideal</div><div class='siem-det-val'>" + c.luna + "</div></div>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Cosecha en</div><div class='siem-det-val'>" + c.dias_cosecha + " dias</div></div>" +
+          "<div class='siem-det-tip'>&#127775; " + c.tip + "</div>" +
+        "</div>" +
+      "</div>";
+    list.appendChild(card);
+  });
+}
+
+function toggleCultivo(header){
+  var det = header.nextElementSibling;
+  if(det.classList.contains("open")){det.classList.remove("open");cultDetAbierto=null;}
+  else{if(cultDetAbierto)cultDetAbierto.classList.remove("open");det.classList.add("open");cultDetAbierto=det;}
+}
+
+/* ASOCIACION */
+var ASOCIACIONES = [
+  {e:"&#127813;",n:"Tomate",
+   buenas:["Albahaca (repele mosca blanca y mejora el sabor)","Zanahoria (afloja el suelo cerca de raices)","Oregano y perejil","CalÃ©ndula (repele nematodos)"],
+   malas:["Hinojo (inhibe el crecimiento)","Repollo (compiten por nutrientes)"],
+   tip:"El tomate con albahaca es la asociacion clasica de la huerta organica argentina."},
+  {e:"&#129388;",n:"Lechuga",
+   buenas:["Zanahoria (convivencia perfecta)","Rabanito (uso del espacio entre plantas)","Frutilla","Cebollin"],
+   malas:["Apio (compiten por espacio y agua)"],
+   tip:"La lechuga tolera sombra parcial: plantar al pie de cultivos altos como tomate."},
+  {e:"&#129382;",n:"Zanahoria",
+   buenas:["Cebolla y ajo (repelen mosca de la zanahoria)","Lechuga","Tomate","Romero"],
+   malas:["Eneldo (inhibe la germinacion)","Remolacha (en grandes cantidades)"],
+   tip:"Plantar cebollin intercalado entre zanahorias reduce el ataque de la mosca hasta un 60%."},
+  {e:"&#127807;",n:"Albahaca",
+   buenas:["Tomate (sinergia total)","Pimiento","Esparragos"],
+   malas:["Salvia (se inhiben mutuamente)"],
+   tip:"La albahaca mejora el sabor del tomate cuando crecen juntos. Se dice que tambien lo protege del oidio."},
+  {e:"&#129371;",n:"Rabanito",
+   buenas:["Zanahoria (marcador de filas)","Pepino","Espinaca","Lechuga"],
+   malas:["Eneldo"],
+   tip:"El rabanito actua como cultivo trampa para la mosca blanca, protegiendo a las plantas vecinas."},
+  {e:"&#127812;",n:"Ajo",
+   buenas:["Todas las roses","Tomate","Zanahoria","Lechuga"],
+   malas:["Arveja","Chaucha (leguminosas en general)"],
+   tip:"El ajo es el repelente universal de la huerta. Plantarlo como borde exterior de cualquier cantero."},
+];
+
+(function buildAsociacion(){
+  var list = document.getElementById("siem-asoc-list");
+  ASOCIACIONES.forEach(function(a){
+    var card = document.createElement("div"); card.className = "siem-asoc-card";
+    card.innerHTML =
+      "<div class='siem-asoc-header'><span class='siem-asoc-emoji'>" + a.e + "</span><span class='siem-asoc-nombre'>" + a.n + "</span></div>" +
+      "<div class='siem-asoc-buenas'>&#10003; Buenas companieras: " + a.buenas.join(", ") + "</div>" +
+      "<div class='siem-asoc-malas'>&#10005; Evitar cerca: " + a.malas.join(", ") + "</div>" +
+      "<div class='siem-asoc-tip'>" + a.tip + "</div>";
+    list.appendChild(card);
+  });
+})();
+
+irEstado(0);resetRes();}
 function resetRes(){var rb=document.getElementById("resultBox");rb.style.display="none";rb.innerHTML="";var btn=document.getElementById("analizarBtn");btn.disabled=false;btn.innerHTML="&#128269; Analizar";}
 async function analizarPlanta(){
   if(!imagenBase64)return;
@@ -727,6 +1470,169 @@ async function sendMessage(){
 }
 function sendChip(el){ci.value=el.textContent.replace(/^[^\w\s]+\s/,"").trim();sendMessage();}
 ci.addEventListener("keydown",function(e){if(e.key==="Enter")sendMessage();});
+
+/* =============================================
+   SIEMBRA Y ESQUEJE
+   ============================================= */
+function siembraTab(id, btn) {
+  document.querySelectorAll("#siembraTabs .tab-btn").forEach(function(b){b.classList.remove("active");});
+  document.querySelectorAll(".tab-panel[id^='st-']").forEach(function(p){p.classList.remove("active");});
+  btn.classList.add("active");
+  document.getElementById("st-"+id).classList.add("active");
+}
+
+var CULTIVOS = [
+  {e:"&#127813;",n:"Tomate",tipo:"almacigo",
+   meses:[8,9,10],cosecha:[12,1,2,3],luna:"Creciente",
+   prof:"0.5cm",espaciado:"50x50cm",dias_germ:"7-10",dias_cosecha:"90-120",
+   tip:"Sembrar en agosto-septiembre en almacigo cubierto. Trasplantar cuando tenga 4 hojas. Requiere tutor desde los 30cm."},
+  {e:"&#127798;",n:"Pimiento",tipo:"almacigo",
+   meses:[8,9],cosecha:[12,1,2],luna:"Creciente",
+   prof:"0.5cm",espaciado:"40x40cm",dias_germ:"10-15",dias_cosecha:"100-130",
+   tip:"Necesita mucho calor para germinar (25-28C). Empezar en agosto bajo cubierta. Muy sensible a las heladas."},
+  {e:"&#129364;",n:"Lechuga",tipo:"almacigo",
+   meses:[2,3,4,7,8,9],cosecha:[4,5,6,9,10,11],luna:"Creciente",
+   prof:"0.3cm",espaciado:"20x20cm",dias_germ:"5-7",dias_cosecha:"60-80",
+   tip:"Se siembra casi todo el ano. Evitar en enero-febrero (demasiado calor). Ideal en media sombra en verano."},
+  {e:"&#129382;",n:"Zanahoria",tipo:"directa",
+   meses:[3,4,5,8,9],cosecha:[6,7,8,11,12],luna:"Menguante",
+   prof:"1cm",espaciado:"5x20cm",dias_germ:"10-14",dias_cosecha:"80-100",
+   tip:"Solo siembra directa. Suelo suelto y profundo, sin piedras. Aclarar a 5cm cuando tenga 5cm de altura."},
+  {e:"&#129365;",n:"Remolacha",tipo:"directa",
+   meses:[3,4,8,9],cosecha:[6,7,11,12],luna:"Menguante",
+   prof:"2cm",espaciado:"10x25cm",dias_germ:"7-10",dias_cosecha:"70-90",
+   tip:"Tolera el frio. Remojar las semillas 12hs antes de sembrar para acelerar la germinacion."},
+  {e:"&#127807;",n:"Albahaca",tipo:"almacigo",
+   meses:[9,10,11],cosecha:[11,12,1,2,3],luna:"Creciente",
+   prof:"0.3cm",espaciado:"20x20cm",dias_germ:"5-8",dias_cosecha:"45-60",
+   tip:"Muy sensible al frio. No sembrar antes de septiembre en Buenos Aires. Cortar las flores para que siga produciendo hojas."},
+  {e:"&#129388;",n:"Espinaca",tipo:"directa",
+   meses:[2,3,4,7,8],cosecha:[4,5,6,9,10],luna:"Creciente",
+   prof:"1cm",espaciado:"10x20cm",dias_germ:"5-8",dias_cosecha:"50-70",
+   tip:"Cultivo de estacion fria. En verano se espi­ga rapido. Ideal otoÃ±o e invierno en Buenos Aires."},
+  {e:"&#129382;",n:"Zapallo",tipo:"directa",
+   meses:[9,10,11],cosecha:[1,2,3,4],luna:"Creciente",
+   prof:"2cm",espaciado:"100x100cm",dias_germ:"5-10",dias_cosecha:"90-120",
+   tip:"Necesita mucho espacio. Plantar en grupos de 2-3 semillas y dejar solo la mas fuerte. Regar al pie."},
+  {e:"&#127821;",n:"Frutilla",tipo:"almacigo",
+   meses:[2,3,7,8],cosecha:[9,10,11,12],luna:"Creciente",
+   prof:"sup",espaciado:"30x30cm",dias_germ:"14-21",dias_cosecha:"90",
+   tip:"Plantar los estolones directamente. Cubrir con paja en invierno. Fructifica en primavera siguiente."},
+  {e:"&#129371;",n:"Rabanito",tipo:"directa",
+   meses:[3,4,5,8,9,10],cosecha:[4,5,6,9,10,11],luna:"Menguante",
+   prof:"1cm",espaciado:"5x15cm",dias_germ:"4-6",dias_cosecha:"25-35",
+   tip:"El cultivo mas rapido de la huerta. Ideal para impacientes y para chicos. Sembrar escalonado cada 2 semanas."},
+  {e:"&#127812;",n:"Ajo",tipo:"directa",
+   meses:[4,5,6],cosecha:[10,11,12],luna:"Menguante",
+   prof:"5cm",espaciado:"10x20cm",dias_germ:"10-15",dias_cosecha:"180-210",
+   tip:"Plantar los dientes separados en otoÃ±o. Cosechar cuando las hojas se secan en primavera. Repele muchas plagas."},
+  {e:"&#129365;",n:"Cebolla",tipo:"almacigo",
+   meses:[2,3,4],cosecha:[8,9,10],luna:"Menguante",
+   prof:"0.5cm",espaciado:"10x20cm",dias_germ:"10-12",dias_cosecha:"150-180",
+   tip:"Sembrar en almacigo en verano-otoÃ±o. Trasplantar cuando el plantino tenga el grosor de un lapiz."},
+];
+
+var MESES_NOMBRES = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+var mesFiltro = new Date().getMonth() + 1; // mes actual 1-12
+
+(function buildCalendario(){
+  var strip = document.getElementById("siem-mes-strip");
+  MESES_NOMBRES.forEach(function(m, idx){
+    var btn = document.createElement("div");
+    btn.className = "siem-mes-btn" + (idx+1===mesFiltro?" active":"");
+    btn.textContent = m;
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".siem-mes-btn").forEach(function(b){b.classList.remove("active");});
+      btn.classList.add("active");
+      mesFiltro = idx+1;
+      renderCultivos();
+    });
+    strip.appendChild(btn);
+  });
+  renderCultivos();
+})();
+
+var cultDetAbierto = null;
+function renderCultivos(){
+  var list = document.getElementById("siem-cultivos-list");
+  list.innerHTML = ""; cultDetAbierto = null;
+  var filtrados = CULTIVOS.filter(function(c){ return c.meses.indexOf(mesFiltro) >= 0; });
+  if(filtrados.length === 0){
+    list.innerHTML = "<div style='text-align:center;padding:18px;font-size:.8rem;color:var(--text-muted)'>No hay cultivos recomendados para este mes.<br>Revisa los meses cercanos.</div>";
+    return;
+  }
+  filtrados.forEach(function(c){
+    var card = document.createElement("div"); card.className = "siem-cultivo-card";
+    card.innerHTML =
+      "<div class='siem-cultivo-header' onclick='toggleCultivo(this)'>" +
+        "<div class='siem-cultivo-emoji'>" + c.e + "</div>" +
+        "<div><div class='siem-cultivo-nombre'>" + c.n + "</div>" +
+        "<div class='siem-cultivo-sub'>Germina en " + c.dias_germ + " dias &middot; Cosecha en " + c.dias_cosecha + " dias</div></div>" +
+        "<div class='siem-cultivo-badges'>" +
+          "<span class='siem-badge " + c.tipo + "'>" + (c.tipo==="directa"?"Directa":"Almacigo") + "</span>" +
+          "<span class='siem-badge luna'>" + c.luna + "</span>" +
+        "</div>" +
+      "</div>" +
+      "<div class='siem-cultivo-detalle'>" +
+        "<div class='siem-det-grid'>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Profundidad</div><div class='siem-det-val'>" + c.prof + "</div></div>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Espaciado</div><div class='siem-det-val'>" + c.espaciado + "</div></div>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Luna ideal</div><div class='siem-det-val'>" + c.luna + "</div></div>" +
+          "<div class='siem-det-item'><div class='siem-det-label'>Cosecha en</div><div class='siem-det-val'>" + c.dias_cosecha + " dias</div></div>" +
+          "<div class='siem-det-tip'>&#127775; " + c.tip + "</div>" +
+        "</div>" +
+      "</div>";
+    list.appendChild(card);
+  });
+}
+
+function toggleCultivo(header){
+  var det = header.nextElementSibling;
+  if(det.classList.contains("open")){det.classList.remove("open");cultDetAbierto=null;}
+  else{if(cultDetAbierto)cultDetAbierto.classList.remove("open");det.classList.add("open");cultDetAbierto=det;}
+}
+
+/* ASOCIACION */
+var ASOCIACIONES = [
+  {e:"&#127813;",n:"Tomate",
+   buenas:["Albahaca (repele mosca blanca y mejora el sabor)","Zanahoria (afloja el suelo cerca de raices)","Oregano y perejil","CalÃ©ndula (repele nematodos)"],
+   malas:["Hinojo (inhibe el crecimiento)","Repollo (compiten por nutrientes)"],
+   tip:"El tomate con albahaca es la asociacion clasica de la huerta organica argentina."},
+  {e:"&#129388;",n:"Lechuga",
+   buenas:["Zanahoria (convivencia perfecta)","Rabanito (uso del espacio entre plantas)","Frutilla","Cebollin"],
+   malas:["Apio (compiten por espacio y agua)"],
+   tip:"La lechuga tolera sombra parcial: plantar al pie de cultivos altos como tomate."},
+  {e:"&#129382;",n:"Zanahoria",
+   buenas:["Cebolla y ajo (repelen mosca de la zanahoria)","Lechuga","Tomate","Romero"],
+   malas:["Eneldo (inhibe la germinacion)","Remolacha (en grandes cantidades)"],
+   tip:"Plantar cebollin intercalado entre zanahorias reduce el ataque de la mosca hasta un 60%."},
+  {e:"&#127807;",n:"Albahaca",
+   buenas:["Tomate (sinergia total)","Pimiento","Esparragos"],
+   malas:["Salvia (se inhiben mutuamente)"],
+   tip:"La albahaca mejora el sabor del tomate cuando crecen juntos. Se dice que tambien lo protege del oidio."},
+  {e:"&#129371;",n:"Rabanito",
+   buenas:["Zanahoria (marcador de filas)","Pepino","Espinaca","Lechuga"],
+   malas:["Eneldo"],
+   tip:"El rabanito actua como cultivo trampa para la mosca blanca, protegiendo a las plantas vecinas."},
+  {e:"&#127812;",n:"Ajo",
+   buenas:["Todas las roses","Tomate","Zanahoria","Lechuga"],
+   malas:["Arveja","Chaucha (leguminosas en general)"],
+   tip:"El ajo es el repelente universal de la huerta. Plantarlo como borde exterior de cualquier cantero."},
+];
+
+(function buildAsociacion(){
+  var list = document.getElementById("siem-asoc-list");
+  ASOCIACIONES.forEach(function(a){
+    var card = document.createElement("div"); card.className = "siem-asoc-card";
+    card.innerHTML =
+      "<div class='siem-asoc-header'><span class='siem-asoc-emoji'>" + a.e + "</span><span class='siem-asoc-nombre'>" + a.n + "</span></div>" +
+      "<div class='siem-asoc-buenas'>&#10003; Buenas companieras: " + a.buenas.join(", ") + "</div>" +
+      "<div class='siem-asoc-malas'>&#10005; Evitar cerca: " + a.malas.join(", ") + "</div>" +
+      "<div class='siem-asoc-tip'>" + a.tip + "</div>";
+    list.appendChild(card);
+  });
+})();
+
 irEstado(0);
 </script>
 </body>
