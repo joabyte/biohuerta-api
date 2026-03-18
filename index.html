@@ -437,6 +437,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 </div>
 
 <script>
+window.onerror=function(msg,src,line,col,err){
+  console.error("JS Error:",msg,"linea:",line);
+  // No bloquear la app, solo loguear
+  return false;
+};
+
 
 
 function $id(id) {
@@ -1075,7 +1081,7 @@ function renderRes(d){
   if(d.razon_confianza)h+="<div style='font-size:.67rem;color:var(--text-m);margin-bottom:8px;line-height:1.4;font-style:italic'>"+d.razon_confianza+"</div>";
   if(d.estado_general)h+="<div class='result-estado'>"+d.estado_general+"</div>";
 
-  // FOTOS DE REFERENCIA — aparecen primero para confirmar la planta
+  // FOTOS DE REFERENCIA  -  aparecen primero para confirmar la planta
   h+="<div class='ref-section' id='refSection'>";
   h+="<div class='ref-title'>&#128247; Fotos de referencia <span>Confirmar especie</span></div>";
   h+="<div class='ref-loading' id='refLoading'><span class='spinner'></span> Buscando fotos de "+d.planta+"...</div>";
@@ -1111,56 +1117,101 @@ function renderRes(d){
   return h;
 }
 
-// Buscar fotos de referencia en Wikimedia Commons
+// Buscar fotos de referencia  -  multiples fuentes con fallback
 async function buscarFotosRef(nombrePlanta){
+  var fotos=[];
+
+  // Traduccion basica para busqueda en EN (mas resultados)
+  var termEN=nombrePlanta;
+  var traducciones={
+    "tomate":"tomato plant","tomate cherry":"cherry tomato plant",
+    "lechuga":"lettuce plant","lechuga mantecosa":"butterhead lettuce",
+    "zanahoria":"carrot plant","remolacha":"beet plant beetroot",
+    "albahaca":"basil plant","espinaca":"spinach plant",
+    "pimiento":"bell pepper plant","zapallo":"zucchini squash plant",
+    "frutilla":"strawberry plant","rabanito":"radish plant",
+    "ajo":"garlic plant","cebolla":"onion plant",
+    "pepino":"cucumber plant","acelga":"chard plant",
+    "perejil":"parsley plant","cilantro":"coriander plant",
+    "oregano":"oregano plant","romero":"rosemary plant",
+    "menta":"mint plant","lavanda":"lavender plant",
+    "geranio":"geranium flower","suculenta":"succulent plant",
+    "cactus":"cactus plant"
+  };
+  var key=nombrePlanta.toLowerCase().trim();
+  if(traducciones[key])termEN=traducciones[key];
+  else termEN=nombrePlanta+" plant";
+
   try{
-    // Buscar en Wikipedia ES primero para imagen principal
-    var queryWiki="https://es.wikipedia.org/w/api.php?action=query&titles="+encodeURIComponent(nombrePlanta)+"&prop=pageimages&format=json&pithumbsize=400&origin=*";
-    var resWiki=await fetch(queryWiki);
-    var dataWiki=await resWiki.json();
-    var pages=dataWiki.query.pages;
-    var wikiImg=null;
-    Object.values(pages).forEach(function(p){if(p.thumbnail)wikiImg=p.thumbnail.source;});
+    // FUENTE 1: Wikipedia ES  -  imagen principal del articulo
+    var r1=await fetch("https://es.wikipedia.org/w/api.php?action=query&titles="+encodeURIComponent(nombrePlanta)+"&prop=pageimages&format=json&pithumbsize=500&origin=*");
+    var d1=await r1.json();
+    var pages1=Object.values(d1.query.pages);
+    if(pages1[0]&&pages1[0].thumbnail)fotos.push(pages1[0].thumbnail.source);
+  }catch(e){}
 
-    // Buscar en Wikimedia Commons por termino
-    var queryCommons="https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&gsrsearch="+encodeURIComponent(nombrePlanta+" plant"+"&gsrlimit=8&prop=imageinfo&iiprop=url|thumburl&iiurlwidth=300&format=json&origin=*");
-    var resCommons=await fetch(queryCommons);
-    var dataCommons=await resCommons.json();
+  try{
+    // FUENTE 2: Wikipedia EN  -  imagen principal (mas cobertura)
+    var r2=await fetch("https://en.wikipedia.org/w/api.php?action=query&titles="+encodeURIComponent(termEN.replace(" plant",""))+"&prop=pageimages&format=json&pithumbsize=500&origin=*");
+    var d2=await r2.json();
+    var pages2=Object.values(d2.query.pages);
+    if(pages2[0]&&pages2[0].thumbnail&&fotos.indexOf(pages2[0].thumbnail.source)<0)
+      fotos.push(pages2[0].thumbnail.source);
+  }catch(e){}
 
-    var fotos=[];
-    if(wikiImg)fotos.push(wikiImg);
-
-    if(dataCommons.query&&dataCommons.query.pages){
-      Object.values(dataCommons.query.pages).forEach(function(p){
+  try{
+    // FUENTE 3: Wikimedia Commons search  -  fotos adicionales
+    var r3=await fetch("https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&gsrsearch="+encodeURIComponent(termEN)+"&gsrlimit=12&prop=imageinfo&iiprop=url&iiurlwidth=350&format=json&origin=*");
+    var d3=await r3.json();
+    if(d3.query&&d3.query.pages){
+      var items=Object.values(d3.query.pages);
+      // Ordenar para priorizar jpgs de buena calidad
+      items.forEach(function(p){
+        if(fotos.length>=5)return;
         if(p.imageinfo&&p.imageinfo[0]){
-          var url=p.imageinfo[0].thumburl||p.imageinfo[0].url;
-          if(url&&(url.endsWith(".jpg")||url.endsWith(".JPG")||url.endsWith(".jpeg")||url.endsWith(".png"))&&fotos.indexOf(url)<0){
-            fotos.push(url);
+          var url=p.imageinfo[0].url;
+          if(url){
+            var low=url.toLowerCase();
+            if((low.includes(".jpg")||low.includes(".jpeg")||low.includes(".png"))
+               &&!low.includes("icon")&&!low.includes("logo")&&!low.includes("map")
+               &&!low.includes("flag")&&fotos.indexOf(url)<0){
+              fotos.push(url);
+            }
           }
         }
       });
     }
-    return fotos.slice(0,3);
-  }catch(e){
-    return [];
-  }
+  }catch(e){}
+
+  // Devolver las 3 mejores
+  return fotos.slice(0,3);
 }
 
 async function mostrarFotosRef(nombrePlanta){
-  var fotos=await buscarFotosRef(nombrePlanta);
   var loadEl=document.getElementById("refLoading");
   var fotosEl=document.getElementById("refFotos");
   var confEl=document.getElementById("refConfirmar");
   if(!loadEl||!fotosEl)return;
+
+  var fotos=await buscarFotosRef(nombrePlanta);
   loadEl.style.display="none";
+
   if(!fotos||fotos.length===0){
-    var refSec=document.getElementById("refSection");
-    if(refSec)refSec.innerHTML="<div style='font-size:.72rem;color:var(--text-m);padding:6px 0'>No se encontraron fotos de referencia para esta planta.</div>";
+    loadEl.style.display="block";
+    loadEl.innerHTML="<span style='opacity:.6'>&#128247; No se encontraron fotos de referencia. Busca ""+nombrePlanta+"" en Google Imagenes para confirmar.</span>";
     return;
   }
+
   var fH="";
-  fotos.forEach(function(url,i){
-    fH+="<div class='ref-foto'><div class='ref-foto-load'>&#127807;</div><img src='"+url+"' alt='"+nombrePlanta+"' loading='lazy' onload="this.classList.add('loaded')" onerror="this.parentElement.innerHTML='<div class=\'ref-foto-load\' style=\'opacity:.3\'>&#10005;</div>'"></div>";
+  fotos.forEach(function(url){
+    // Forzar HTTPS para evitar mixed content en WebView
+    var safeUrl=url.replace("http://","https://");
+    fH+="<div class='ref-foto'>"+
+      "<div class='ref-foto-load'>&#127793;</div>"+
+      "<img src='"+safeUrl+"' alt='"+nombrePlanta+"' "+
+      "onload="this.classList.add('loaded');this.previousElementSibling.style.display='none'" "+
+      "onerror="this.style.display='none';this.previousElementSibling.innerHTML='&#10005;';this.previousElementSibling.style.opacity='.3'">"+
+    "</div>";
   });
   fotosEl.innerHTML=fH;
   fotosEl.style.display="grid";
