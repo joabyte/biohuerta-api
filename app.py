@@ -1,9 +1,21 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-import anthropic, json, os
+import anthropic, json, os, threading, urllib.request, time
 app = Flask(__name__)
 CORS(app)
 client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY",""))
+
+def keep_alive():
+    time.sleep(60)
+    url=os.environ.get("RENDER_EXTERNAL_URL","")
+    if not url: return
+    while True:
+        try: urllib.request.urlopen(url+"/health",timeout=10)
+        except: pass
+        time.sleep(600)
+
+threading.Thread(target=keep_alive,daemon=True).start()
+
 @app.route("/")
 def index(): return send_from_directory(".", "index.html")
 @app.route("/health")
@@ -26,30 +38,21 @@ def analizar_planta():
         d=request.json or {}
         img=d.get("image","")
         mt=d.get("media_type","image/jpeg")
-        if not img: return jsonify({"error":"No se recibio imagen"}),400
-        P=("Sos un botanico experto en horticultura. "
-           "Analiza esta imagen con detalle.\n\n"
-           "PASO 1 IDENTIFICACION:\n"
-           "Observa forma de hojas, nervaduras, textura, tallo, flores, frutos.\n"
-           "Si hay texto visible en la imagen usalo como pista.\n"
-           "Si no estas seguro al 90%, pon confianza baja.\n\n"
-           "PASO 2 ESTADO:\n"
-           "Revisa color de hojas y patrones de amarillamiento.\n"
-           "Detecta signos de plagas: agujeros, telas, manchas.\n\n"
-           "PASO 3 DIAGNOSTICO:\n"
-           "Nitrogeno: amarillamiento uniforme hojas viejas.\n"
-           "Hierro: amarillamiento intervenal hojas jovenes.\n"
-           "Magnesio: amarillamiento intervenal hojas viejas.\n"
-           "Calcio: puntas marrones hojas jovenes.\n"
-           "Potasio: bordes quemados hojas viejas.\n\n"
-           "Responde SOLO con JSON sin markdown:\n"
-           '{"planta":"nombre comun","confianza":"alta/media/baja",'
-           '"razon_confianza":"explicacion","estado_general":"estado",'
-           '"carencias":[{"nutriente":"X","sintoma":"X","solucion":"X"}],'
-           '"excesos":[{"nutriente":"X","sintoma":"X","solucion":"X"}],'
-           '"plagas_detectadas":"ninguna o descripcion",'
-           '"recomendacion_principal":"accion urgente",'
-           '"abono_sugerido":"producto organico"}')
+        if not img: return jsonify({"error":"No imagen"}),400
+        P=("Sos un botanico experto. Analiza esta imagen con detalle.\n"
+           "IDENTIFICACION: forma de hojas, nervaduras, textura, tallo, flores, frutos.\n"
+           "Si ves texto en la imagen usalo. Si no estas seguro 90%, confianza baja.\n"
+           "ESTADO: color hojas, amarillamiento, plagas.\n"
+           "DIAGNOSTICO: Nitrogeno=amarillamiento uniforme hojas viejas, "
+           "Hierro=amarillamiento intervenal hojas jovenes, "
+           "Magnesio=amarillamiento intervenal hojas viejas, "
+           "Calcio=puntas marrones hojas jovenes, "
+           "Potasio=bordes quemados hojas viejas.\n"
+           "Responde SOLO JSON sin markdown: "
+           '{"planta":"nombre","confianza":"alta/media/baja","razon_confianza":"x",'
+           '"estado_general":"x","carencias":[{"nutriente":"x","sintoma":"x","solucion":"x"}],'
+           '"excesos":[{"nutriente":"x","sintoma":"x","solucion":"x"}],'
+           '"plagas_detectadas":"ninguna o desc","recomendacion_principal":"x","abono_sugerido":"x"}')
         r=client.messages.create(model="claude-opus-4-5",max_tokens=1500,
             messages=[{"role":"user","content":[
                 {"type":"image","source":{"type":"base64","media_type":mt,"data":img}},
@@ -61,7 +64,7 @@ def analizar_planta():
                 if p2.startswith("json"): p2=p2[4:].strip()
                 if p2.startswith("{"): t=p2; break
         return jsonify(json.loads(t))
-    except anthropic.AuthenticationError: return jsonify({"error":"API key invalida. Configurar en Render > Environment"}),401
+    except anthropic.AuthenticationError: return jsonify({"error":"API key invalida"}),401
     except json.JSONDecodeError as e: return jsonify({"error":"JSON invalido: "+str(e)}),500
     except Exception as e: return jsonify({"error":str(e)}),500
 if __name__=="__main__":
