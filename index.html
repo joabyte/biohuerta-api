@@ -840,7 +840,7 @@ async function analizarPlanta(){
   var controller=new AbortController();
   var tid=setTimeout(function(){controller.abort();},50000);
   try{
-    var res=await fetch("/analizar-planta",{
+    var res=await fetch("https://biohuerta-api.onrender.com/analizar-planta",{
       method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({image:imagenBase64,media_type:imageMediaType}),
       signal:controller.signal
@@ -1100,7 +1100,7 @@ async function sendMessage(){
   ci.value="";sb.disabled=true;
   aM(text,"user");conv.push({role:"user",content:text});sT();
   try{
-    var res=await fetch("/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({system:sysp,messages:conv})});
+    var res=await fetch("https://biohuerta-api.onrender.com/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({system:sysp,messages:conv})});
     var data=await res.json();
     if(data.error)throw new Error(data.error);
     conv.push({role:"assistant",content:data.reply});
