@@ -7,3 +7,5 @@ services:
     envVars:
       - key: ANTHROPIC_API_KEY
         sync: false
+      - key: RENDER_EXTERNAL_URL
+        value: https://biohuerta-api.onrender.com
